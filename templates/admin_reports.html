@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}System Reports | Aerion{% endblock %}
+{% block content %}
+<section class="section-panel">
+  <h1>Reports Center</h1>
+  <p>Revenue, flight occupancy and booking activity. Filters apply to departure date and flight status.</p>
+  <form method="GET" class="search-form">
+    <div class="form-row">
+      <div class="form-group"><label for="start_date">Departure from</label><input id="start_date" type="date" name="start_date" value="{{ start_date or '' }}"></div>
+      <div class="form-group"><label for="end_date">Departure to</label><input id="end_date" type="date" name="end_date" value="{{ end_date or '' }}"></div>
+      <div class="form-group"><label for="status">Flight status</label><select id="status" name="status"><option value="">All statuses</option>{% for s in ['on_time','delayed','cancelled','completed','departed','arrived'] %}<option value="{{ s }}" {% if selected_status == s %}selected{% endif %}>{{ s|replace('_',' ')|title }}</option>{% endfor %}</select></div>
+    </div>
+    <button type="submit" class="btn-submit">Apply filters</button>
+    <a class="btn-link" href="{{ url_for('admin_reports', start_date=start_date, end_date=end_date, status=selected_status, format='csv') }}">Export CSV</a>
+    <a class="btn-link" href="{{ url_for('admin_operations') }}">Operations Centre</a>
+  </form>
+  <h2>Revenue by route</h2>
+  <div class="table-wrap"><table><thead><tr><th>Route ID</th><th>Route</th><th>Revenue</th></tr></thead><tbody>
+  {% for item in revenue_per_route %}<tr><td>{{ item.RouteID }}</td><td>{{ item.route_name }}</td><td>{{ '%.2f'|format(item.revenue or 0) }}</td></tr>{% else %}<tr><td colspan="3">No ticket revenue recorded for these filters.</td></tr>{% endfor %}
+  </tbody></table></div>
+  <h2>Flight occupancy</h2>
+  <div class="table-wrap"><table><thead><tr><th>Flight</th><th>Departure</th><th>Status</th><th>Seats</th><th>Booked</th><th>Occupancy</th><th>Revenue</th><th>Manifest</th></tr></thead><tbody>
+  {% for item in flight_occupancy %}<tr><td>{{ item.flight.FlightNumber }}</td><td>{{ item.flight.DepartureTime }}</td><td>{{ item.flight.Status }}</td><td>{{ item.total_seats }}</td><td>{{ item.booked }}</td><td>{{ item.occupancy_rate }}%</td><td>{{ '%.2f'|format(item.revenue) }}</td><td><a href="{{ url_for('admin_passenger_manifest', flight_id=item.flight.FlightID) }}">Open</a></td></tr>{% else %}<tr><td colspan="8">No flight data available.</td></tr>{% endfor %}
+  </tbody></table></div>
+  <h2>Loyalty</h2><p>Total miles: {{ total_miles }}</p><p>Average miles: {{ avg_miles }}</p>
+  <h2>Recent bookings</h2><ul>{% for booking in recent_activity %}<li>Booking #{{ booking.BookingID }} - {{ booking.Status }} - {{ booking.BookingDate }}</li>{% else %}<li>No recent bookings.</li>{% endfor %}</ul>
+</section>
+{% endblock %}

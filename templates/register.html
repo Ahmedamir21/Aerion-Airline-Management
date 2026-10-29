@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Sign Up | Aerion{% endblock %}
+{% block content %}
+<div class="auth-container">
+    <aside class="auth-aside">
+        <i class="fas fa-plane"></i>
+        <h2>Fly with Aerion.</h2>
+        <p>Create a passenger account to book flights and collect miles.</p>
+    </aside>
+    <div class="auth-box">
+        <div class="auth-header"><h2>Sign Up</h2></div>
+        <form method="POST" class="auth-form" autocomplete="off">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            {% if next_url %}<input type="hidden" name="next" value="{{ next_url }}">{% endif %}
+            <div class="form-group">
+                <label for="name">Full name</label>
+                <input type="text" id="name" name="name" required maxlength="100" value="{{ form.get('name', '') }}" autocomplete="name" autofocus>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required minlength="3" maxlength="50" value="{{ form.get('username', '') }}" autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="passport">Passport number</label>
+                    <input type="text" id="passport" name="passport" required maxlength="20" value="{{ form.get('passport', '') }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="contact">Phone or email <small>(optional)</small></label>
+                <input type="text" id="contact" name="contact" maxlength="200" value="{{ form.get('contact', '') }}">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="pw-field">
+                        <input type="password" id="password" name="password" required minlength="8" autocomplete="new-password">
+                        <button type="button" class="pw-toggle" aria-label="Show password" aria-pressed="false"><i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirm password</label>
+                    <div class="pw-field">
+                        <input type="password" id="confirm_password" name="confirm_password" required minlength="8" autocomplete="new-password">
+                        <button type="button" class="pw-toggle" aria-label="Show password" aria-pressed="false"><i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+            </div>
+            <p class="help-text">At least 8 characters.</p>
+            <button type="submit" class="btn-submit">Sign Up</button>
+        </form>
+        <div class="auth-footer"><p>Already have an account? <a href="{{ url_for('login', next=next_url or None) }}" class="btn-link">Sign in</a></p></div>
+    </div>
+</div>
+{% endblock %}

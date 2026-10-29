@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Aircraft Defects | Aerion{% endblock %}
+{% block content %}
+<section class="section-panel">
+  <h1>Aircraft Defects</h1>
+  <p>Critical unresolved defects block flight scheduling and passenger booking until explicitly marked cleared.</p>
+  <form method="POST" class="auth-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-row"><div class="form-group"><label for="aircraft_id">Aircraft</label><select id="aircraft_id" name="aircraft_id" required>{% for aircraft in aircrafts %}<option value="{{ aircraft.AircraftID }}">{{ aircraft.Model }} — {{ aircraft.RegistrationNumber }}</option>{% endfor %}</select></div>
+    <div class="form-group"><label for="severity">Severity</label><select id="severity" name="severity"><option value="minor">Minor</option><option value="major">Major</option><option value="critical">Critical</option></select></div></div>
+    <div class="form-group"><label for="description">Defect description</label><textarea id="description" name="description" required maxlength="200"></textarea></div>
+    <button type="submit" class="btn-submit">Report defect</button>
+  </form>
+  <h2>Recent defects</h2><div class="table-wrap"><table><thead><tr><th>ID</th><th>Aircraft</th><th>Description</th><th>Severity</th><th>Status</th><th>Update status</th></tr></thead><tbody>
+  {% for item in defects %}<tr><td>#{{ item.DefectID }}</td><td>{{ item.Aircraft.RegistrationNumber }}</td><td>{{ item.Description }}</td><td>{{ item.Severity }}</td><td>{{ item.Status }}</td><td><form method="POST" action="{{ url_for('admin_update_aircraft_defect_status', defect_id=item.DefectID) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><select name="status"><option value="reported" {% if item.Status == 'reported' %}selected{% endif %}>Reported</option><option value="under_repair" {% if item.Status == 'under_repair' %}selected{% endif %}>Under repair</option><option value="cleared" {% if item.Status == 'cleared' %}selected{% endif %}>Cleared</option></select><button type="submit">Save</button></form></td></tr>
+  {% else %}<tr><td colspan="6">No defects recorded.</td></tr>{% endfor %}
+  </tbody></table></div>
+</section>
+{% endblock %}

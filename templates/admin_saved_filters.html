@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Saved Filters | Aerion{% endblock %}
+{% block content %}
+<section class="section-panel">
+  <h1>Saved Report Filters</h1><p>Save report query parameters, such as <code>start_date=2026-10-01&amp;status=delayed</code>. Filters are private to your account.</p>
+  <form method="POST" class="auth-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-row"><div class="form-group"><label for="name">Filter name</label><input id="name" name="name" maxlength="80" required placeholder="Today's flights"></div>
+    <div class="form-group"><label for="query_string">Report parameters (without ?)</label><input id="query_string" name="query_string" maxlength="1000" placeholder="start_date=2026-10-28&amp;status=delayed"></div></div>
+    <button type="submit" class="btn-submit">Save filter</button>
+  </form>
+  <div class="table-wrap"><table><thead><tr><th>Name</th><th>Saved parameters</th><th>Action</th></tr></thead><tbody>
+  {% for item in filters %}<tr><td>{{ item.Name }}</td><td>{{ item.QueryString or 'No filters' }}</td><td><a href="{{ url_for('admin_reports') }}{% if item.QueryString %}?{{ item.QueryString }}{% endif %}">Open report</a>
+    <form method="POST" action="{{ url_for('admin_delete_saved_filter', filter_id=item.FilterID) }}" class="inline-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button type="submit">Delete</button></form></td></tr>
+  {% else %}<tr><td colspan="3">No saved filters.</td></tr>{% endfor %}
+  </tbody></table></div><p><a href="{{ url_for('admin_operations') }}">Back to Operations Centre</a></p>
+</section>
+{% endblock %}

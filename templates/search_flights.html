@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Search Flights - Aerion{% endblock %}
+
+{% block content %}
+<div class="search-container">
+    <div class="search-box">
+        <h2><i class="fas fa-search"></i> Search Flights</h2>
+        <p class="muted">Pick where you want to go. Departure airport and date are optional; we show the nearest flights first.</p>
+        <form method="GET" action="{{ url_for('passenger_search_flights') }}" class="search-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>From <small>(optional)</small></label>
+                    <select name="origin">
+                        <option value="">Anywhere</option>
+                        {% for airport in airports %}
+                        <option value="{{ airport.Code }}">{{ airport.City }} - {{ airport.Name }} ({{ airport.Code }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>To</label>
+                    <select name="destination">
+                        <option value="">Anywhere</option>
+                        {% for airport in airports %}
+                        <option value="{{ airport.Code }}">{{ airport.City }} - {{ airport.Name }} ({{ airport.Code }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Departure date <small>(optional)</small></label>
+                <input type="date" name="date">
+            </div>
+            <button type="submit" class="btn-search"><i class="fas fa-search"></i> Find flights</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

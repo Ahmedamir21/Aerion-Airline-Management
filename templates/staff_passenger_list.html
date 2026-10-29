@@ -1,0 +1,3 @@
+{% extends "base.html" %}
+{% block title %}Flight Passenger List{% endblock %}
+{% block content %}<section class="section-panel"><h1>Passenger list - {{ flight.FlightNumber }}</h1><table><thead><tr><th>Passenger</th><th>Booking</th><th>Ticket</th><th>Seat</th><th>Baggage</th></tr></thead><tbody>{% for item in passenger_info %}<tr><td>{{ item.passenger.Name if item.passenger else "Unknown" }}</td><td>#{{ item.booking.BookingID }} ({{ item.booking.Status }})</td><td>{{ item.ticket.TicketID if item.ticket else "Not issued" }}</td><td>{{ item.seat }}</td><td>{{ item.baggage.TagNumber if item.baggage else "None" }}</td></tr>{% else %}<tr><td colspan="5">No bookings for this flight.</td></tr>{% endfor %}</tbody></table></section>{% endblock %}

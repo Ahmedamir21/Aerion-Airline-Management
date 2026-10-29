@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Aerion{% endblock %}</title>
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('theme');
+                if (!t) { t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+                document.documentElement.setAttribute('data-theme', t);
+            } catch (e) {}
+        })();
+    </script>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=asset_v) }}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="nav-logo"><i class="fas fa-plane"></i><span>Aerion</span></a>
+            {% if config.get("DEMO_MODE") %}<span class="demo-pill" title="Sample data only, not connected to live airline operations">Demo</span>{% endif %}
+            <ul class="nav-links">
+                {% if session.get('admin_id') %}
+                <li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('admin_manage_users') }}">Users</a></li>
+                <li><a href="{{ url_for('admin_reports') }}">Reports</a></li>
+                <li><a href="{{ url_for('admin_operations') }}">Operations</a></li>
+                {% elif session.get('staff_id') %}
+                <li><a href="{{ url_for('staff_dashboard') }}">Dashboard</a></li>
+                {% elif session.get('passenger_id') %}
+                <li><a href="{{ url_for('passenger_dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('passenger_search_flights') }}">Search flights</a></li>
+                <li><a href="{{ url_for('passenger_my_bookings') }}">My bookings</a></li>
+                {% else %}
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('register') }}">Sign Up</a></li>
+                {% endif %}
+                {% if session.get('admin_id') or session.get('staff_id') or session.get('passenger_id') %}
+                <li>
+                    <form method="POST" action="{{ url_for('logout') }}" class="nav-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit" class="nav-cta">Log out</button>
+                    </form>
+                </li>
+                {% else %}
+                <li><a href="{{ url_for('login') }}" class="nav-cta">Sign in</a></li>
+                {% endif %}
+                <li class="theme-toggle-container">
+                    <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="toasts" role="status" aria-live="polite">
+            {% for category, message in messages %}
+            <div class="toast toast-{{ category }}"><span>{{ message }}</span><button type="button" class="toast-x" aria-label="Dismiss">&times;</button></div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-bottom"><p>&copy; 2026 Aerion. CSAI 202 Project.{% if config.get("DEMO_MODE") %} Demo mode: sample data only.{% endif %}</p></div>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            var btn = document.getElementById('theme-toggle');
+            if (!btn) return;
+            var icon = btn.querySelector('i');
+            function sync() {
+                var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+                icon.className = dark ? 'fas fa-sun' : 'fas fa-moon';
+            }
+            btn.addEventListener('click', function () {
+                var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                try { localStorage.setItem('theme', next); } catch (e) {}
+                sync();
+            });
+            sync();
+        })();
+    </script>
+    <script defer src="{{ url_for('static', filename='js/main.js', v=asset_v) }}"></script>
+</body>
+</html>

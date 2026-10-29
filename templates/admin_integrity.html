@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Database Integrity Monitor | Aerion{% endblock %}
+{% block content %}
+<section class="section-panel">
+  <h1>Database Integrity Monitor</h1>
+  <p>Read-only checks. This screen reports possible problems; it does not bypass database constraints or silently modify operational records.</p>
+  <p><strong>{{ issues|length }}</strong> issue(s) detected in the current dataset.</p>
+  <div class="table-wrap"><table><thead><tr><th>Severity</th><th>Check</th><th>Details</th></tr></thead><tbody>
+  {% for severity, title, detail in issues %}<tr><td>{{ severity|upper }}</td><td>{{ title }}</td><td>{{ detail }}</td></tr>{% else %}<tr><td colspan="3">No integrity issues detected by the current checks.</td></tr>{% endfor %}
+  </tbody></table></div>
+  <p>Checks include invalid time ranges, missing flight links, aircraft-capacity mismatches, overlapping assignments and confirmed bookings exceeding recorded seat inventory.</p>
+  <p><a href="{{ url_for('admin_operations') }}">Back to Operations Centre</a></p>
+</section>
+{% endblock %}

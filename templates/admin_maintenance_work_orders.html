@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Maintenance Work Orders | Aerion{% endblock %}
+{% block content %}
+<section class="section-panel">
+  <h1>Aircraft Maintenance Work Orders</h1>
+  <p>Critical unresolved work orders block booking on the affected aircraft until marked completed. This is a training simulation, not a substitute for approved aviation maintenance control.</p>
+  <form method="POST" class="auth-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-row"><div class="form-group"><label for="aircraft_id">Aircraft</label><select id="aircraft_id" name="aircraft_id" required>{% for aircraft in aircrafts %}<option value="{{ aircraft.AircraftID }}">{{ aircraft.Model }} — {{ aircraft.RegistrationNumber }}</option>{% endfor %}</select></div>
+    <div class="form-group"><label for="severity">Severity</label><select id="severity" name="severity"><option value="minor">Minor</option><option value="major">Major</option><option value="critical">Critical — blocks booking</option></select></div></div>
+    <div class="form-group"><label for="description">Description</label><textarea id="description" name="description" required maxlength="200"></textarea></div>
+    <div class="form-group"><label for="technician_id">Assign maintenance technician (optional)</label><select id="technician_id" name="technician_id"><option value="">Unassigned</option>{% for tech in technicians %}<option value="{{ tech.EmployeeID }}">{{ tech.Name }} — {{ tech.Position|replace('_',' ')|title }}</option>{% endfor %}</select></div>
+    <button type="submit" class="btn-submit">Create work order</button>
+  </form>
+  <h2>Work orders</h2><div class="table-wrap"><table><thead><tr><th>ID</th><th>Aircraft</th><th>Description</th><th>Severity</th><th>Status</th><th>Assigned technician</th><th>Reported</th><th>Update status</th></tr></thead><tbody>
+  {% for item in work_orders %}<tr><td>#{{ item.WorkOrderID }}</td><td>{{ item.Aircraft.RegistrationNumber }}</td><td>{{ item.Description }}</td><td>{{ item.Severity }}</td><td>{{ item.Status }}</td><td>{{ item.AssignedTechnicianID or 'Unassigned' }}</td><td>{{ item.ReportedDate }}</td><td><form method="POST" action="{{ url_for('admin_update_work_order_status', work_order_id=item.WorkOrderID) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><select name="status"><option value="pending" {% if item.Status == 'pending' %}selected{% endif %}>Pending</option><option value="in_progress" {% if item.Status == 'in_progress' %}selected{% endif %}>In progress</option><option value="blocked" {% if item.Status == 'blocked' %}selected{% endif %}>Blocked</option><option value="completed" {% if item.Status == 'completed' %}selected{% endif %}>Completed</option></select><button type="submit">Save</button></form></td></tr>{% else %}<tr><td colspan="8">No work orders.</td></tr>{% endfor %}
+  </tbody></table></div>
+</section>
+{% endblock %}

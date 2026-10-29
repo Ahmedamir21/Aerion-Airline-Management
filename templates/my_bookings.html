@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}My Bookings - Aerion{% endblock %}
+
+{% block content %}
+<div class="my-bookings-container">
+    <h2><i class="fas fa-list"></i> My Booking History</h2>
+    
+    {% if booking_details %}
+    <div class="bookings-grid">
+        {% for detail in booking_details %}
+        <div class="booking-card">
+            <div class="booking-header">
+                <span class="booking-id">Booking #{{ detail.booking.BookingID }}</span>
+                <span class="booking-status {{ detail.booking.Status }}">{{ detail.booking.Status }}</span>
+            </div>
+            
+            <div class="booking-info">
+                <h3>Flight {{ detail.flight.FlightNumber }}</h3>
+                <p class="route-info">
+                    {{ detail.flight.Route.DepartureAirport.Name }}({{ detail.flight.Route.DepartureAirport.Code }}) 
+                    → 
+                    {{ detail.flight.Route.ArrivalAirport.Name }}({{ detail.flight.Route.ArrivalAirport.Code }})
+                </p>
+                
+                <div class="flight-details">
+                    <span><i class="fas fa-calendar"></i> {{ detail.flight.DepartureTime.strftime('%m/%d/%Y %H:%M') }}</span>
+                    <span><i class="fas fa-chair"></i> Seat {{ detail.ticket.SeatNumber }}</span>
+                    <span><i class="fas fa-money-bill-wave"></i> ${{ detail.ticket.FarePaid }}</span>
+                </div>
+                {% if detail.payment %}<p>Payment: {{ detail.payment.PaymentMethod }} - ${{ '%.2f'|format(detail.payment.Amount) }}</p>{% endif %}
+                {% if detail.refund %}<p>Refund: ${{ '%.2f'|format(detail.refund.Amount) }} ({{ detail.refund.Status }}, demo only)</p>{% endif %}
+            </div>
+            
+            <div class="booking-actions">
+                {% if detail.booking.Status == 'confirmed' %}
+                <form method="post" action="{{ url_for('passenger_cancel_booking', booking_id=detail.booking.BookingID) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn-cancel"><i class="fas fa-times"></i> Cancel</button>
+                </form>
+                {% else %}
+                <span class="cancelled">Cancelled</span>
+                {% endif %}
+            </div>
+            
+            <div class="booking-detail-tags">
+                {% if detail.baggage %}
+                <span tag-item>
+                    <i class="fas fa-suitcase"></i> Bag: {{ detail.baggage.TagNumber }} ({detail.baggage.Status})
+                </span>
+                {% endif %}
+                <span tag-item>
+                    <i class="fas fa-ticket-alt"></i> Ticket: {{ detail.ticket.TicketID }}
+                </span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-bookings">
+        <i class="fas fa-file-alt"></i>
+        <p>No bookings found.</p>
+        <a href="{{ url_for('passenger_search_flights') }}" class="btn-primary">Search and book a flight</a>
+    </div>
+    {% endif %}
+</div>
+
+{% if loyalty %}
+<div class="loyalty-summary">
+    <h3>Loyalty Account</h3>
+    <div class="miles-stats">
+        <span>Current Balance: {{ loyalty.MilesBalance }} miles</span>
+        <span>Lifetime Total: {{ loyalty.MilesEarnedTotal }} miles</span>
+    </div>
+    {% if loyalty.LastEarnedDate %}
+    <div class="last-earned">
+        <small>Last earned: {{ loyalty.LastEarnedDate.strftime('%B %d, %Y') }}</small>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+</div>
+
+<div class="actions-panel">
+    <a href="{{ url_for('passenger_search_flights') }}" class="btn-primary">
+        <i class="fas fa-search"></i> Book Another Flight
+    </a>
+    <a href="{{ url_for('logout') }}" class="btn-secondary">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
+</div>
+{% endblock %}

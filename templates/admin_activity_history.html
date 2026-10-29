@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Activity History | Aerion{% endblock %}
+{% block content %}
+<section class="section-panel">
+  <h1>Activity History</h1><p>Audit-friendly record of important actions. Passwords, tokens and submitted secret values are never stored in the activity log.</p>
+  <div class="table-wrap"><table><thead><tr><th>Time (UTC)</th><th>User</th><th>Action</th><th>Entity</th><th>Record ID</th><th>Details</th></tr></thead><tbody>
+  {% for log in logs %}<tr><td>{{ log.CreatedAt }}</td><td>{{ log.ActorUsername }}</td><td>{{ log.Action }}</td><td>{{ log.EntityType }}</td><td>{{ log.EntityID or '—' }}</td><td>{{ log.Details or '—' }}</td></tr>{% else %}<tr><td colspan="6">No audit entries recorded yet.</td></tr>{% endfor %}
+  </tbody></table></div>
+  <p><a href="{{ url_for('admin_operations') }}">Back to Operations Centre</a></p>
+</section>
+{% endblock %}

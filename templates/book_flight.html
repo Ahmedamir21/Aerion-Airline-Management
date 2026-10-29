@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% block title %}Select Seats - {{ flight.FlightNumber }} - Aerion{% endblock %}
+
+{% block content %}
+<div class="seat-page">
+  <div class="seat-head">
+    <div>
+      <h2><i class="fas fa-plane"></i> Select Seats</h2>
+      <p class="muted">{{ flight.FlightNumber }} &middot; {{ flight.Route.DepartureAirport.City }} ({{ flight.Route.DepartureAirport.Code }}) &rarr; {{ flight.Route.ArrivalAirport.City }} ({{ flight.Route.ArrivalAirport.Code }}) &middot; {{ flight.DepartureTime.strftime('%a %d %b %Y, %H:%M') }}</p>
+      <p class="muted">{{ aircraft.Model if aircraft else 'Aircraft' }} &middot; {{ free_count }} of {{ total_seats }} seats available</p>
+    </div>
+    <div class="fare-cards">
+      <button type="button" class="fare-card biz" data-focus="business"><span>Business</span><strong>${{ '{:,.0f}'.format(prices.business) }}</strong><small>per seat</small></button>
+      <button type="button" class="fare-card eco" data-focus="economy"><span>Economy</span><strong>${{ '{:,.0f}'.format(prices.economy) }}</strong><small>per seat</small></button>
+    </div>
+  </div>
+  <p class="muted price-line">Estimated price per seat: Business ${{ '{:,.2f}'.format(prices.business) }} &middot; Economy ${{ '{:,.2f}'.format(prices.economy) }}</p>
+
+  <div class="seat-legend">
+    <span><i class="seat free biz"></i> Business</span>
+    <span><i class="seat free eco"></i> Economy</span>
+    <span><i class="seat sel"></i> Selected</span>
+    <span><i class="seat taken"></i> Taken</span>
+  </div>
+
+  <div class="seat-layout">
+    <div class="plane" id="plane">
+      <div class="plane-nose" aria-hidden="true"></div>
+      {% for cabin in plan.cabins %}
+      {% if cabin.rows %}
+      {% if cabin.name == 'economy' %}
+      <div class="cabin-divider"><span>Economy cabin starts here &middot; standard legroom</span></div>
+      {% endif %}
+      <section class="cabin {{ cabin.name }}" data-cabin="{{ cabin.name }}">
+        <header class="cabin-title">
+          {% if cabin.name == 'business' %}<i class="fas fa-crown"></i> Business class <em>wide seats, extra legroom, 2x miles</em>
+          {% else %}<i class="fas fa-chair"></i> Economy class <em>standard seat</em>{% endif %}
+        </header>
+        <div class="seat-row letters">
+          <span class="row-no"></span>
+          {% for g in cabin.rows[0].groups %}
+          <div class="grp">{% for n in g %}<span class="letter">{{ n[-1] }}</span>{% endfor %}</div>
+          {% endfor %}
+        </div>
+        {% for row in cabin.rows %}
+        <div class="seat-row{% if row.row in plan.exit_rows %} exit{% endif %}">
+          <span class="row-no">{{ row.row }}</span>
+          {% for g in row.groups %}
+          <div class="grp">
+            {% for n in g %}
+            {% set cls = cabin.name %}
+            {% set gone = (n in taken) or (n not in existing) %}
+            <button type="button" class="seat {{ 'biz' if cls == 'business' else 'eco' }} {{ 'taken' if gone else 'free' }}"
+              data-seat="{{ n }}" data-price="{{ prices[cls] }}" data-class="{{ cls }}"
+              {% if gone %}disabled aria-label="Seat {{ n }} taken"{% else %}aria-label="Seat {{ n }}, {{ cls }}, ${{ prices[cls] }}"{% endif %}>{{ n[-1] }}</button>
+            {% endfor %}
+          </div>
+          {% endfor %}
+          <span class="row-no">{{ row.row }}</span>
+        </div>
+        {% endfor %}
+      </section>
+      {% endif %}
+      {% endfor %}
+      <div class="plane-tail" aria-hidden="true"></div>
+    </div>
+
+    <aside class="seat-summary">
+      <h3>Your booking</h3>
+      <form method="POST" id="seat-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <ul id="sel-list" class="sel-list"><li class="muted">No seats selected yet</li></ul>
+        <p class="total-line">Total <strong id="sel-total">$0.00</strong></p>
+        {% if is_staff %}
+        <div class="form-group">
+          <label for="pu">Passenger username</label>
+          <input type="text" id="pu" name="passenger_username" required placeholder="e.g. passenger1">
+        </div>
+        <input type="hidden" name="payment_method" value="cash">
+        <p class="muted">Counter booking: paid in cash at the desk.</p>
+        {% else %}
+        <div class="form-group">
+          <label for="payment-method">Payment method</label>
+          <select id="payment-method" name="payment_method">
+            <option value="card">Card</option><option value="cash">Cash</option><option value="bank_transfer">Bank transfer</option>
+          </select>
+        </div>
+        <div class="form-group miles-box">
+          <label for="miles_units">Loyalty miles: {{ miles }}</label>
+          {% if max_units > 0 %}
+          <select id="miles_units" name="miles_units">
+            <option value="0">Do not use miles</option>
+            {% for u in range(1, max_units + 1) %}<option value="{{ u }}">Use {{ u * miles_per }} miles &rarr; {{ u * per_unit }}% off</option>{% endfor %}
+          </select>
+          {% else %}
+          <small class="muted">Every {{ miles_per }} miles = {{ per_unit }}% off. Fly to earn more (business earns double).</small>
+          {% endif %}
+        </div>
+        {% endif %}
+        <button type="submit" class="btn-primary" id="confirm" disabled>Confirm booking</button>
+      </form>
+    </aside>
+  </div>
+</div>
+
+<script>
+(function () {
+  var plane = document.getElementById('plane');
+  if (!plane) return;
+  var picked = {}, list = document.getElementById('sel-list'), totalEl = document.getElementById('sel-total');
+  var form = document.getElementById('seat-form'), btn = document.getElementById('confirm');
+  var units = document.getElementById('miles_units'), perUnit = {{ per_unit }};
+  function money(v) { return '$' + v.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}); }
+  function render() {
+    var keys = Object.keys(picked), sum = 0;
+    list.innerHTML = '';
+    if (!keys.length) { list.innerHTML = '<li class="muted">No seats selected yet</li>'; }
+    keys.forEach(function (k) {
+      sum += picked[k].price;
+      var li = document.createElement('li');
+      li.textContent = k + ' \u00b7 ' + picked[k].cls + ' \u00b7 ' + money(picked[k].price);
+      list.appendChild(li);
+    });
+    var u = units ? parseInt(units.value || '0', 10) : 0;
+    if (u) sum = sum * (1 - u * perUnit / 100);
+    totalEl.textContent = money(sum);
+    btn.disabled = !keys.length;
+  }
+  plane.addEventListener('click', function (e) {
+    var s = e.target.closest('.seat.free'); if (!s) return;
+    var k = s.dataset.seat;
+    if (picked[k]) { delete picked[k]; s.classList.remove('sel'); }
+    else if (Object.keys(picked).length >= 9) { return; }
+    else { picked[k] = {price: parseFloat(s.dataset.price), cls: s.dataset.class}; s.classList.add('sel'); }
+    render();
+  });
+  if (units) units.addEventListener('change', render);
+  form.addEventListener('submit', function (e) {
+    var keys = Object.keys(picked);
+    if (!keys.length) { e.preventDefault(); return; }
+    keys.forEach(function (k) {
+      var i = document.createElement('input'); i.type = 'hidden'; i.name = 'seats'; i.value = k; form.appendChild(i);
+    });
+  });
+  document.querySelectorAll('.fare-card').forEach(function (c) {
+    c.addEventListener('click', function () {
+      var t = plane.querySelector('[data-cabin="' + c.dataset.focus + '"]');
+      if (t) t.scrollIntoView({behavior: 'smooth', block: 'center'});
+    });
+  });
+})();
+</script>
+{% endblock %}

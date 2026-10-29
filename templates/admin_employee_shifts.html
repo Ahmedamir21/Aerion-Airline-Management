@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block title %}Employee Shifts{% endblock %}
+{% block content %}<section class="section-panel"><h1>Employee Shifts</h1><form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><label for="employee_id">Employee</label><select id="employee_id" name="employee_id" required>{% for employee in employees %}<option value="{{ employee.EmployeeID }}">{{ employee.Name }} (#{{ employee.EmployeeID }})</option>{% endfor %}</select><label for="date">Date</label><input id="date" name="date" type="date" required><label for="shift_type">Shift</label><select id="shift_type" name="shift_type"><option>morning</option><option>afternoon</option><option>night</option></select><button type="submit" class="btn-primary">Assign shift</button></form><h2>Scheduled shifts</h2><ul>{% for shift in shifts %}<li>{{ shift.Date }} - {{ shift.ShiftType }} - {{ shift.Status }}</li>{% endfor %}</ul></section>{% endblock %}

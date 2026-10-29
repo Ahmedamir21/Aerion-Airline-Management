@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block title %}Add Aircraft{% endblock %}
+{% block content %}<section class="section-panel"><h1>Add Aircraft</h1><form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><label for="model">Aircraft model</label><input id="model" name="model" required><label for="total_seats">Total seats</label><input id="total_seats" name="total_seats" type="number" min="1" required><label for="seat_config">Seat configuration</label><input id="seat_config" name="seat_config" value="3-2" required><button type="submit" class="btn-primary">Add aircraft</button></form></section>{% endblock %}

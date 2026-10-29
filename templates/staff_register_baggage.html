@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block title %}Register Baggage{% endblock %}
+{% block content %}<section class="section-panel"><h1>Register Baggage</h1><p>Booking #{{ booking.BookingID }} · Flight #{{ booking.FlightID }}</p>{% if ticket %}<p>Ticket #{{ ticket.TicketID }} · Seat {{ ticket.SeatNumber }}</p><form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><label for="tag_number">Baggage tag</label><input id="tag_number" name="tag_number" maxlength="20"><label for="weight">Weight (kg)</label><input id="weight" name="weight" type="number" min="0.1" step="0.1" required><button type="submit" class="btn-primary">Register baggage</button></form>{% else %}<p>A ticket must be issued before baggage can be registered.</p>{% endif %}</section>{% endblock %}

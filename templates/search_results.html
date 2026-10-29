@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Flights - Aerion{% endblock %}
+
+{% block content %}
+<div class="search-results">
+    <div class="results-header">
+        <h2><i class="fas fa-plane-departure"></i> Search Results</h2>
+        <div class="search-criteria">
+            <strong>From:</strong> {% if origin_airport %}{{ origin_airport.City }} ({{ origin_airport.Code }}){% else %}Anywhere{% endif %}
+            &nbsp; <strong>To:</strong> {% if dest_airport %}{{ dest_airport.City }} ({{ dest_airport.Code }}){% else %}Anywhere{% endif %}
+            {% if date %}&nbsp; <strong>From date:</strong> {{ date.strftime('%b %d, %Y') }}{% endif %}
+        </div>
+        {% if date and flights and not on_date %}
+        <p class="muted">No flights on that day, so these are the nearest ones we have.</p>
+        {% endif %}
+    </div>
+
+    {% if flights %}
+    <div class="results-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Flight #</th>
+                    <th>Route</th>
+                    <th>Departs</th>
+                    <th>Arrives</th>
+                    <th>Aircraft</th>
+                    <th>Economy</th>
+                    <th>Business</th>
+                    <th>Seats</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for flight in flights %}
+                {% set sc = seat_counts[flight.FlightID] %}
+                {% set pr = prices[flight.FlightID] %}
+                <tr class="result-row">
+                    <td><strong>{{ flight.FlightNumber }}</strong><br><span class="status-badge {{ flight.Status }}">{{ flight.Status|replace('_', ' ') }}</span></td>
+                    <td>{{ flight.Route.DepartureAirport.Code }} &rarr; {{ flight.Route.ArrivalAirport.Code }}<br><small class="muted">{{ flight.Route.DepartureAirport.City }} to {{ flight.Route.ArrivalAirport.City }}</small></td>
+                    <td>{{ flight.DepartureTime.strftime('%a %d %b, %H:%M') }}</td>
+                    <td>{{ flight.ArrivalTime.strftime('%H:%M') }}</td>
+                    <td>{{ flight.Aircraft.Model if flight.Aircraft else '-' }}</td>
+                    <td>${{ '{:,.0f}'.format(pr.economy) }}</td>
+                    <td>${{ '{:,.0f}'.format(pr.business) }}</td>
+                    <td>{{ sc.economy + sc.business }} free</td>
+                    <td><a href="{{ url_for('passenger_book_flight', flight_id=flight.FlightID) }}" class="btn-primary">Book</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="no-results-found">
+        <i class="fas fa-search"></i>
+        <p>No upcoming flights match your search.</p>
+        <p>Try another airport or remove the date.</p>
+    </div>
+    {% endif %}
+
+    <div class="results-actions">
+        <a href="{{ url_for('passenger_search_flights') }}" class="btn-primary"><i class="fas fa-search"></i> Search again</a>
+    </div>
+</div>
+{% endblock %}

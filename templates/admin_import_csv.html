@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}CSV Import | Aerion{% endblock %}
+{% block content %}
+<section class="section-panel">
+  <h1>Flight Data Import</h1>
+  <p>Upload a UTF-8 CSV of flight records. The system validates every row first and imports nothing if any row is invalid. Limit: 2 MB and 500 rows per file.</p>
+  <p>Required headers: <code>FlightNumber,RouteID,AircraftID,DepartureTime,ArrivalTime,Status,FareClass</code></p>
+  <p>Accepted status values: <code>on_time</code>, <code>delayed</code>, <code>cancelled</code>. Date/time values should be ISO 8601, for example <code>2026-11-01T14:30:00</code>.</p>
+  <form method="POST" enctype="multipart/form-data" class="auth-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-group"><label for="file">CSV file</label><input id="file" type="file" name="file" accept=".csv,text/csv" required></div>
+    <button type="submit" class="btn-submit">Validate and import</button>
+  </form>
+  {% if result %}<h2>Import result</h2><p>Validated: {{ result.validated }} · Imported: {{ result.imported }} · Rejected: {{ result.rejected }}</p>
+    {% if result.errors %}<ul>{% for error in result.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+  {% endif %}
+  <p><a href="{{ url_for('admin_operations') }}">Back to Operations Centre</a></p>
+</section>
+{% endblock %}

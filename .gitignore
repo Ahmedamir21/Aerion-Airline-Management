@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local environments and secrets
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# Local databases and generated runtime files
+instance/
+*.db
+*.sqlite
+*.sqlite3
+
+# OS/editor noise
+.DS_Store
+.idea/
+.vscode/

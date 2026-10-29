@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Passenger Manifest — {{ flight.FlightNumber }} | Aerion{% endblock %}
+{% block content %}
+<section class="section-panel print-area">
+  <div class="no-print" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+    <h1>Passenger Manifest — {{ flight.FlightNumber }}</h1>
+    <div><button type="button" class="btn-submit" onclick="window.print()">Print</button> <a class="btn-link" href="{{ url_for('admin_passenger_manifest', flight_id=flight.FlightID, format='csv') }}">Export CSV</a></div>
+  </div>
+  <p><strong>Route:</strong> {{ flight.Route.DepartureAirport.Code if flight.Route and flight.Route.DepartureAirport else '—' }} → {{ flight.Route.ArrivalAirport.Code if flight.Route and flight.Route.ArrivalAirport else '—' }} · <strong>Departure:</strong> {{ flight.DepartureTime }} · <strong>Status:</strong> {{ flight.Status }}</p>
+  <div class="table-wrap"><table><thead><tr><th>Passenger</th><th>Passport</th><th>Contact</th><th>Booking</th><th>Seat</th><th>Booking status</th><th>Fare</th></tr></thead><tbody>
+  {% for booking, passenger, ticket in rows %}<tr><td>{{ passenger.Name }}</td><td>{{ passenger.PassportNumber }}</td><td>{{ passenger.ContactInfo or '—' }}</td><td>#{{ booking.BookingID }}</td><td>{{ ticket.SeatNumber if ticket else 'Unassigned' }}</td><td>{{ booking.Status }}</td><td>{{ '%.2f'|format(ticket.FarePaid if ticket else booking.TotalAmount) }}</td></tr>{% else %}<tr><td colspan="7">No confirmed bookings for this flight.</td></tr>{% endfor %}
+  </tbody></table></div>
+  <p><strong>Rows:</strong> {{ rows|length }}. Passenger data is confidential and intended for authorized operations staff.</p>
+  <p class="no-print"><a href="{{ url_for('admin_operations') }}">Back to Operations Centre</a></p>
+</section>
+{% endblock %}

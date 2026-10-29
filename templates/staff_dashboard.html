@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}Staff Dashboard - Aerion{% endblock %}
+
+{% block content %}
+<div class="staff-dashboard">
+    <div class="staff-header">
+        <div class="staff-avatar">
+            <i class="fas fa-user-tie"></i>
+        </div>
+        <div class="staff-name">
+            <h3>Welcome, {{ employee.Name }}</h3>
+            <p>Staff Member</p>
+        </div>
+    </div>
+    
+    <div class="staff-stats">
+        <div class="stat-card">
+            <div class="stat-number">{{ total_flights }}</div>
+            <div class="stat-label">Total Flights</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ bookings|length }}</div>
+            <div class="stat-label">Total Bookings</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">Active</div>
+            <div class="stat-label">Status</div>
+        </div>
+    </div>
+    
+    <div class="section-panel">
+        <h2><i class="fas fa-plane-up"></i> Flight Management</h2>
+        
+        <div class="flights-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Flight #</th>
+                        <th>Route</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                        <th>Aircraft</th>
+                        <th>Status</th>
+                        <th>Occupancy</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for flight in flights %}
+                    <tr class="flight-row">
+                        <td>{{ flight.FlightNumber }}</td>
+                        <td>
+                            {{ flight.Route.DepartureAirport.Name if flight.Route and flight.Route.DepartureAirport else 'Unknown' }} → 
+                            {{ flight.Route.ArrivalAirport.Name if flight.Route and flight.Route.ArrivalAirport else 'Unknown' }}
+                        </td>
+                        <td>{{ flight.DepartureTime.strftime('%m/%d %H:%M') }}</td>
+                        <td>{{ flight.ArrivalTime.strftime('%m/%d %H:%M') }}</td>
+                        <td>{{ flight.Aircraft.Model if flight.Aircraft else 'Unassigned' }}</td>
+                        <td>
+                            <span class="status-{{ flight.Status }}">{{ flight.Status }}</span>
+                        </td>
+                        <td>
+                            {{ available_seats.get(flight.FlightID, 0) }} seats available
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <span>Use the booking list below to check in passengers or register baggage.</span>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="section-panel">
+        <h2><i class="fas fa-user"></i> Passenger Check-in</h2>
+        
+        <p>Select a booking to check in a passenger:</p>
+        
+        <div class="check-in-options">
+            {% for booking in bookings[:5] %}
+            <div class="check-in-option">
+                <strong>Booking #{{ booking.BookingID }}</strong> - 
+                Flight {{ booking.Flight.FlightNumber }} 
+                on {{ booking.Flight.DepartureTime.strftime('%m/%d %H:%M') }}
+                <br>
+                <small>Passenger: {{ passenger_names.get(booking.PassengerID, 'Unknown') }}</small>
+                <a href="{{ url_for('staff_check_in', booking_id=booking.BookingID) }}" class="btn-small">Check In</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="section-panel">
+        <h2><i class="fas fa-suitcase"></i> Register Baggage</h2>
+        
+        <p>Register checked baggage for a passenger:</p>
+        
+        <div class="baggage-options">
+            {% for booking in bookings[:3] %}
+            <div class="baggage-option">
+                <strong>Booking #{{ booking.BookingID }}</strong> - 
+                <a href="{{ url_for('staff_register_baggage', booking_id=booking.BookingID) }}" class="btn-action">
+                    Register Baggage
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="section-panel">
+        <h2><i class="fas fa-list"></i> Flight Passenger List</h2>
+        
+        <p>View passenger manifest for a flight:</p>
+        
+        <div class="passenger-list">
+            {% for flight in flights[:3] %}
+            <div class="flight-passenger">
+                <strong>Flight {{ flight.FlightNumber }}</strong> 
+                <a href="{{ url_for('staff_passenger_list', flight_id=flight.FlightID) }}" class="btn-view">
+                    View Passenger List ({{ available_seats.get(flight.FlightID, 0) }} seats available)
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="actions-panel">
+    <a href="{{ url_for('logout') }}" class="btn-secondary">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
+</div>
+{% endblock %}

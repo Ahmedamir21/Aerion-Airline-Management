@@ -1,0 +1,334 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4520 3100" width="4520" height="3100" font-family="Segoe UI, Arial, sans-serif">
+<rect width="4520" height="3100" fill="#ffffff"/>
+<text x="2260.0" y="150" text-anchor="middle" font-size="54" font-weight="700" fill="#1d2b64">Aerion Airline Management - ER Diagram (Chen notation)</text>
+<text x="2260.0" y="215" text-anchor="middle" font-size="30" fill="#5d687a">Underlined = key attribute &#183; dashed ellipse = derived &#183; double box = weak entity</text>
+<line x1="1266.0" y1="461.0" x2="1360" y2="530.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="1454.0" y1="461.0" x2="1360" y2="530.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="1266.0" y1="659.0" x2="1360" y2="590.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="1454.0" y1="659.0" x2="1360" y2="590.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="366.0" y1="461.0" x2="460" y2="530.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="554.0" y1="461.0" x2="460" y2="530.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="366.0" y1="659.0" x2="460" y2="590.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="554.0" y1="659.0" x2="460" y2="590.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="2166.0" y1="461.0" x2="2260" y2="530.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="2354.0" y1="461.0" x2="2260" y2="530.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="2166.0" y1="659.0" x2="2260" y2="590.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="2354.0" y1="659.0" x2="2260" y2="590.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="3066.0" y1="461.0" x2="3160" y2="530.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="3254.0" y1="461.0" x2="3160" y2="530.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="3066.0" y1="659.0" x2="3160" y2="590.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="3254.0" y1="659.0" x2="3160" y2="590.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="3966.0" y1="461.0" x2="4060" y2="530.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="3830.0" y1="461.0" x2="4060" y2="530.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="4154.0" y1="461.0" x2="4060" y2="530.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="3966.0" y1="659.0" x2="4060" y2="590.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="4154.0" y1="659.0" x2="4060" y2="590.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="366.0" y1="1121.0" x2="460" y2="1190.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="554.0" y1="1121.0" x2="460" y2="1190.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="366.0" y1="1319.0" x2="460" y2="1250.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="554.0" y1="1319.0" x2="460" y2="1250.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="1266.0" y1="1121.0" x2="1360" y2="1190.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="1130.0" y1="1121.0" x2="1360" y2="1190.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="1454.0" y1="1121.0" x2="1360" y2="1190.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="1266.0" y1="1319.0" x2="1360" y2="1250.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="1130.0" y1="1319.0" x2="1360" y2="1250.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="1454.0" y1="1319.0" x2="1360" y2="1250.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="2166.0" y1="1121.0" x2="2260" y2="1190.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="2030.0" y1="1121.0" x2="2260" y2="1190.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="2354.0" y1="1121.0" x2="2260" y2="1190.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="2166.0" y1="1319.0" x2="2260" y2="1250.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="2354.0" y1="1319.0" x2="2260" y2="1250.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="3066.0" y1="1121.0" x2="3160" y2="1190.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="2930.0" y1="1121.0" x2="3160" y2="1190.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="3254.0" y1="1121.0" x2="3160" y2="1190.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="3066.0" y1="1319.0" x2="3160" y2="1250.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="3254.0" y1="1319.0" x2="3160" y2="1250.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="3966.0" y1="1121.0" x2="4060" y2="1190.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="3830.0" y1="1121.0" x2="4060" y2="1190.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="4154.0" y1="1121.0" x2="4060" y2="1190.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="3966.0" y1="1319.0" x2="4060" y2="1250.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="4154.0" y1="1319.0" x2="4060" y2="1250.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="366.0" y1="1781.0" x2="460" y2="1850.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="554.0" y1="1781.0" x2="460" y2="1850.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="366.0" y1="1979.0" x2="460" y2="1910.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="1266.0" y1="1781.0" x2="1360" y2="1850.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="1454.0" y1="1781.0" x2="1360" y2="1850.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="1266.0" y1="1979.0" x2="1360" y2="1910.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="2166.0" y1="1781.0" x2="2260" y2="1850.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="2030.0" y1="1781.0" x2="2260" y2="1850.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="2354.0" y1="1781.0" x2="2260" y2="1850.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="2166.0" y1="1979.0" x2="2260" y2="1910.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="2354.0" y1="1979.0" x2="2260" y2="1910.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="3066.0" y1="1781.0" x2="3160" y2="1850.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="2930.0" y1="1781.0" x2="3160" y2="1850.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="3254.0" y1="1781.0" x2="3160" y2="1850.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="3066.0" y1="1979.0" x2="3160" y2="1910.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="3254.0" y1="1979.0" x2="3160" y2="1910.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="366.0" y1="2441.0" x2="460" y2="2510.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="554.0" y1="2441.0" x2="460" y2="2510.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="366.0" y1="2639.0" x2="460" y2="2570.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="1266.0" y1="2441.0" x2="1360" y2="2510.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="1130.0" y1="2441.0" x2="1360" y2="2510.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="1454.0" y1="2441.0" x2="1360" y2="2510.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="1266.0" y1="2639.0" x2="1360" y2="2570.0" stroke="#8a93a6" stroke-width="2"/>
+<line x1="1454.0" y1="2639.0" x2="1360" y2="2570.0" stroke="#8a93a6" stroke-width="2"/>
+<polyline points="1455.0,560 2165.0,560" fill="none" stroke="#1d2b64" stroke-width="3"/>
+<polyline points="1265.0,560 555.0,560" fill="none" stroke="#1d2b64" stroke-width="3"/>
+<polyline points="1360,530.0 1360,260.0 4060,260.0 4060,530.0" fill="none" stroke="#1d2b64" stroke-width="3"/>
+<polyline points="2355.0,560 3065.0,560" fill="none" stroke="#1d2b64" stroke-width="3"/>
+<polyline points="2260,590.0 2260,1190.0" fill="none" stroke="#1d2b64" stroke-width="3"/>
+<polyline points="2165.0,1220 1455.0,1220" fill="none" stroke="#1d2b64" stroke-width="3"/>
+<polyline points="2355.0,1220 3065.0,1220" fill="none" stroke="#1d2b64" stroke-width="3"/>
+<polyline points="2260,1250.0 2260,1850.0" fill="none" stroke="#1d2b64" stroke-width="3"/>
+<polyline points="2355.0,1880 3065.0,1880" fill="none" stroke="#1d2b64" stroke-width="3"/>
+<polyline points="3255.0,1220 3965.0,1220" fill="none" stroke="#1d2b64" stroke-width="3"/>
+<polyline points="555.0,1220 1265.0,1220" fill="none" stroke="#1d2b64" stroke-width="3"/>
+<polyline points="1385,1850.0 1385,1250.0" fill="none" stroke="#1d2b64" stroke-width="3"/>
+<polyline points="1335,1250.0 1335,1550.0 910.0,1550.0 910.0,1550.0 435,1550.0 435,1850.0" fill="none" stroke="#1d2b64" stroke-width="3"/>
+<polyline points="460,1910.0 460,2510.0" fill="none" stroke="#1d2b64" stroke-width="3"/>
+<polyline points="1338,1910.0 1338,2510.0" fill="none" stroke="#1d2b64" stroke-width="3"/>
+<polyline points="1382,1910.0 1382,2510.0" fill="none" stroke="#1d2b64" stroke-width="3"/>
+<polyline points="4060,590.0 4060,960.0 3610.0,960.0 3610.0,960.0 1360,960.0 1360,1190.0" fill="none" stroke="#1d2b64" stroke-width="3"/>
+<text x="1489.0" y="550.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<text x="2131.0" y="550.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<polygon points="1810.0,522.0 1890.0,560.0 1810.0,598.0 1730.0,560.0" fill="#fff6e0" stroke="#c9a24a" stroke-width="3"/>
+<text x="1810.0" y="566.0" text-anchor="middle" font-size="19" fill="#3a2d00">Has account</text>
+<text x="1231.0" y="550.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<text x="589.0" y="550.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<polygon points="910.0,522.0 990.0,560.0 910.0,598.0 830.0,560.0" fill="#fff6e0" stroke="#c9a24a" stroke-width="3"/>
+<text x="910.0" y="566.0" text-anchor="middle" font-size="19" fill="#3a2d00">Has account</text>
+<text x="1374.0" y="496.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<text x="4074.0" y="496.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<polygon points="2710.0,222.0 2790.0,260.0 2710.0,298.0 2630.0,260.0" fill="#fff6e0" stroke="#c9a24a" stroke-width="3"/>
+<text x="2710.0" y="266.0" text-anchor="middle" font-size="19" fill="#3a2d00">Has account</text>
+<text x="2389.0" y="550.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<text x="3031.0" y="550.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<polygon points="2710.0,522.0 2790.0,560.0 2710.0,598.0 2630.0,560.0" fill="#fff6e0" stroke="#c9a24a" stroke-width="3"/>
+<text x="2710.0" y="566.0" text-anchor="middle" font-size="19" fill="#3a2d00">Earns</text>
+<text x="2274.0" y="624.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<text x="2274.0" y="1156.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">N</text>
+<polygon points="2260.0,852.0 2340.0,890.0 2260.0,928.0 2180.0,890.0" fill="#fff6e0" stroke="#c9a24a" stroke-width="3"/>
+<text x="2260.0" y="896.0" text-anchor="middle" font-size="19" fill="#3a2d00">Makes</text>
+<text x="2131.0" y="1210.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">N</text>
+<text x="1489.0" y="1210.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<polygon points="1810.0,1182.0 1890.0,1220.0 1810.0,1258.0 1730.0,1220.0" fill="#fff6e0" stroke="#c9a24a" stroke-width="3"/>
+<text x="1810.0" y="1226.0" text-anchor="middle" font-size="19" fill="#3a2d00">Books</text>
+<text x="2389.0" y="1210.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<text x="3031.0" y="1210.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<polygon points="2710.0,1182.0 2790.0,1220.0 2710.0,1258.0 2630.0,1220.0" fill="#fff6e0" stroke="#c9a24a" stroke-width="3"/>
+<text x="2710.0" y="1226.0" text-anchor="middle" font-size="19" fill="#3a2d00">Issues</text>
+<text x="2274.0" y="1284.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<text x="2274.0" y="1816.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">N</text>
+<polygon points="2260.0,1512.0 2340.0,1550.0 2260.0,1588.0 2180.0,1550.0" fill="#fff6e0" stroke="#c9a24a" stroke-width="3"/>
+<text x="2260.0" y="1556.0" text-anchor="middle" font-size="19" fill="#3a2d00">Paid by</text>
+<text x="2389.0" y="1870.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<text x="3031.0" y="1870.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<polygon points="2710.0,1842.0 2790.0,1880.0 2710.0,1918.0 2630.0,1880.0" fill="#fff6e0" stroke="#c9a24a" stroke-width="3"/>
+<text x="2710.0" y="1886.0" text-anchor="middle" font-size="19" fill="#3a2d00">Refunded by</text>
+<text x="3289.0" y="1210.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<text x="3931.0" y="1210.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">N</text>
+<polygon points="3610.0,1182.0 3690.0,1220.0 3610.0,1258.0 3530.0,1220.0" fill="#fff6e0" stroke="#c9a24a" stroke-width="3"/>
+<text x="3610.0" y="1226.0" text-anchor="middle" font-size="19" fill="#3a2d00">Carries</text>
+<text x="589.0" y="1210.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<text x="1231.0" y="1210.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">N</text>
+<polygon points="910.0,1182.0 990.0,1220.0 910.0,1258.0 830.0,1220.0" fill="#fff6e0" stroke="#c9a24a" stroke-width="3"/>
+<text x="910.0" y="1226.0" text-anchor="middle" font-size="19" fill="#3a2d00">Operates</text>
+<text x="1399.0" y="1816.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<text x="1399.0" y="1284.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">N</text>
+<polygon points="1385.0,1632.0 1465.0,1670.0 1385.0,1708.0 1305.0,1670.0" fill="#fff6e0" stroke="#c9a24a" stroke-width="3"/>
+<text x="1385.0" y="1676.0" text-anchor="middle" font-size="19" fill="#3a2d00">Scheduled as</text>
+<text x="1349.0" y="1284.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<text x="449.0" y="1816.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">N</text>
+<polygon points="885.0,1512.0 965.0,1550.0 885.0,1588.0 805.0,1550.0" fill="#fff6e0" stroke="#c9a24a" stroke-width="3"/>
+<polygon points="885.0,1520.0 951.0,1550.0 885.0,1580.0 819.0,1550.0" fill="none" stroke="#c9a24a" stroke-width="2"/>
+<text x="885.0" y="1556.0" text-anchor="middle" font-size="19" fill="#3a2d00">Has seat</text>
+<text x="474.0" y="1944.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">N</text>
+<text x="474.0" y="2476.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<polygon points="460.0,2172.0 540.0,2210.0 460.0,2248.0 380.0,2210.0" fill="#fff6e0" stroke="#c9a24a" stroke-width="3"/>
+<text x="460.0" y="2216.0" text-anchor="middle" font-size="19" fill="#3a2d00">Priced as</text>
+<text x="1352.0" y="1944.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">N</text>
+<text x="1352.0" y="2476.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<polygon points="1338.0,2052.0 1418.0,2090.0 1338.0,2128.0 1258.0,2090.0" fill="#fff6e0" stroke="#c9a24a" stroke-width="3"/>
+<text x="1338.0" y="2096.0" text-anchor="middle" font-size="19" fill="#3a2d00">Departs from</text>
+<text x="1396.0" y="1944.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">N</text>
+<text x="1396.0" y="2476.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">1</text>
+<polygon points="1382.0,2292.0 1462.0,2330.0 1382.0,2368.0 1302.0,2330.0" fill="#fff6e0" stroke="#c9a24a" stroke-width="3"/>
+<text x="1382.0" y="2336.0" text-anchor="middle" font-size="19" fill="#3a2d00">Arrives at</text>
+<text x="4074.0" y="624.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">M</text>
+<text x="1374.0" y="1156.0" text-anchor="middle" font-size="30" font-weight="700" fill="#b4232c">N</text>
+<polygon points="2780.0,922.0 2860.0,960.0 2780.0,998.0 2700.0,960.0" fill="#fff6e0" stroke="#c9a24a" stroke-width="3"/>
+<text x="2780.0" y="966.0" text-anchor="middle" font-size="19" fill="#3a2d00">Assigned to</text>
+<rect x="1265.0" y="530.0" width="190" height="60" fill="#e6e9f5" stroke="#1d2b64" stroke-width="3"/>
+<text x="1360" y="567" text-anchor="middle" font-size="24" font-weight="700" fill="#1d2b64">UserAccount</text>
+<ellipse cx="1266.0" cy="440" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="1266.0" y="445" text-anchor="middle" font-size="16" fill="#0e1520" text-decoration="underline">UserID</text>
+<ellipse cx="1454.0" cy="440" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="1454.0" y="445" text-anchor="middle" font-size="16" fill="#0e1520">Password</text>
+<ellipse cx="1266.0" cy="680" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="1266.0" y="685" text-anchor="middle" font-size="16" fill="#0e1520">Username</text>
+<ellipse cx="1454.0" cy="680" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="1454.0" y="685" text-anchor="middle" font-size="16" fill="#0e1520">Role</text>
+<rect x="365.0" y="530.0" width="190" height="60" fill="#e6e9f5" stroke="#1d2b64" stroke-width="3"/>
+<text x="460" y="567" text-anchor="middle" font-size="24" font-weight="700" fill="#1d2b64">Employee</text>
+<ellipse cx="366.0" cy="440" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="366.0" y="445" text-anchor="middle" font-size="16" fill="#0e1520" text-decoration="underline">EmployeeID</text>
+<ellipse cx="554.0" cy="440" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="554.0" y="445" text-anchor="middle" font-size="16" fill="#0e1520">Position</text>
+<ellipse cx="366.0" cy="680" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="366.0" y="685" text-anchor="middle" font-size="16" fill="#0e1520">Name</text>
+<ellipse cx="554.0" cy="680" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="554.0" y="685" text-anchor="middle" font-size="14" fill="#0e1520">PhoneExtension</text>
+<rect x="2165.0" y="530.0" width="190" height="60" fill="#e6e9f5" stroke="#1d2b64" stroke-width="3"/>
+<text x="2260" y="567" text-anchor="middle" font-size="24" font-weight="700" fill="#1d2b64">Passenger</text>
+<ellipse cx="2166.0" cy="440" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="2166.0" y="445" text-anchor="middle" font-size="14" fill="#0e1520" text-decoration="underline">PassportNumber</text>
+<ellipse cx="2354.0" cy="440" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="2354.0" y="445" text-anchor="middle" font-size="16" fill="#0e1520">Name</text>
+<ellipse cx="2166.0" cy="680" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="2166.0" y="685" text-anchor="middle" font-size="16" fill="#0e1520" text-decoration="underline">PassengerID</text>
+<ellipse cx="2354.0" cy="680" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="2354.0" y="685" text-anchor="middle" font-size="16" fill="#0e1520">ContactInfo</text>
+<rect x="3065.0" y="530.0" width="190" height="60" fill="#e6e9f5" stroke="#1d2b64" stroke-width="3"/>
+<text x="3160" y="567" text-anchor="middle" font-size="24" font-weight="700" fill="#1d2b64">LoyaltyAccount</text>
+<ellipse cx="3066.0" cy="440" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="3066.0" y="445" text-anchor="middle" font-size="16" fill="#0e1520" text-decoration="underline">LoyaltyID</text>
+<ellipse cx="3254.0" cy="440" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="3254.0" y="445" text-anchor="middle" font-size="14" fill="#0e1520">MilesEarnedTotal</text>
+<ellipse cx="3066.0" cy="680" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="3066.0" y="685" text-anchor="middle" font-size="16" fill="#0e1520">MilesBalance</text>
+<ellipse cx="3254.0" cy="680" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="3254.0" y="685" text-anchor="middle" font-size="14" fill="#0e1520">LastEarnedDate</text>
+<rect x="3965.0" y="530.0" width="190" height="60" fill="#e6e9f5" stroke="#1d2b64" stroke-width="3"/>
+<text x="4060" y="567" text-anchor="middle" font-size="24" font-weight="700" fill="#1d2b64">CrewMember</text>
+<ellipse cx="3966.0" cy="440" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="3966.0" y="445" text-anchor="middle" font-size="16" fill="#0e1520" text-decoration="underline">CrewID</text>
+<ellipse cx="3830.0" cy="440" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="3830.0" y="445" text-anchor="middle" font-size="16" fill="#0e1520">Base</text>
+<ellipse cx="4154.0" cy="440" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="4154.0" y="445" text-anchor="middle" font-size="16" fill="#0e1520">Role</text>
+<ellipse cx="3966.0" cy="680" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="3966.0" y="685" text-anchor="middle" font-size="16" fill="#0e1520">Name</text>
+<ellipse cx="4154.0" cy="680" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="4154.0" y="685" text-anchor="middle" font-size="16" fill="#0e1520">LicenseNumber</text>
+<rect x="365.0" y="1190.0" width="190" height="60" fill="#e6e9f5" stroke="#1d2b64" stroke-width="3"/>
+<text x="460" y="1227" text-anchor="middle" font-size="24" font-weight="700" fill="#1d2b64">Aircraft</text>
+<ellipse cx="366.0" cy="1100" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="366.0" y="1105" text-anchor="middle" font-size="16" fill="#0e1520" text-decoration="underline">AircraftID</text>
+<ellipse cx="554.0" cy="1100" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="554.0" y="1105" text-anchor="middle" font-size="16" fill="#0e1520">Model</text>
+<ellipse cx="366.0" cy="1340" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="366.0" y="1345" text-anchor="middle" font-size="14" fill="#0e1520">RegistrationNumber</text>
+<ellipse cx="554.0" cy="1340" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="554.0" y="1345" text-anchor="middle" font-size="16" fill="#0e1520">TotalSeats</text>
+<rect x="1265.0" y="1190.0" width="190" height="60" fill="#e6e9f5" stroke="#1d2b64" stroke-width="3"/>
+<text x="1360" y="1227" text-anchor="middle" font-size="24" font-weight="700" fill="#1d2b64">Flight</text>
+<ellipse cx="1266.0" cy="1100" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="1266.0" y="1105" text-anchor="middle" font-size="16" fill="#0e1520" text-decoration="underline">FlightID</text>
+<ellipse cx="1130.0" cy="1100" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="1130.0" y="1105" text-anchor="middle" font-size="16" fill="#0e1520">Status</text>
+<ellipse cx="1454.0" cy="1100" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="1454.0" y="1105" text-anchor="middle" font-size="16" fill="#0e1520">DepartureTime</text>
+<ellipse cx="1266.0" cy="1340" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="1266.0" y="1345" text-anchor="middle" font-size="16" fill="#0e1520">FlightNumber</text>
+<ellipse cx="1130.0" cy="1340" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="1130.0" y="1345" text-anchor="middle" font-size="16" fill="#0e1520">Duration</text>
+<ellipse cx="1454.0" cy="1340" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="1454.0" y="1345" text-anchor="middle" font-size="16" fill="#0e1520">ArrivalTime</text>
+<rect x="2165.0" y="1190.0" width="190" height="60" fill="#e6e9f5" stroke="#1d2b64" stroke-width="3"/>
+<text x="2260" y="1227" text-anchor="middle" font-size="24" font-weight="700" fill="#1d2b64">Booking</text>
+<ellipse cx="2166.0" cy="1100" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="2166.0" y="1105" text-anchor="middle" font-size="16" fill="#0e1520" text-decoration="underline">BookingID</text>
+<ellipse cx="2030.0" cy="1100" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="2030.0" y="1105" text-anchor="middle" font-size="16" fill="#0e1520">Status</text>
+<ellipse cx="2354.0" cy="1100" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="2354.0" y="1105" text-anchor="middle" font-size="16" fill="#0e1520">NumberOfSeats</text>
+<ellipse cx="2166.0" cy="1340" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="2166.0" y="1345" text-anchor="middle" font-size="16" fill="#0e1520">BookingDate</text>
+<ellipse cx="2354.0" cy="1340" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="2354.0" y="1345" text-anchor="middle" font-size="16" fill="#0e1520">TotalAmount</text>
+<rect x="3065.0" y="1190.0" width="190" height="60" fill="#e6e9f5" stroke="#1d2b64" stroke-width="3"/>
+<text x="3160" y="1227" text-anchor="middle" font-size="24" font-weight="700" fill="#1d2b64">Ticket</text>
+<ellipse cx="3066.0" cy="1100" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="3066.0" y="1105" text-anchor="middle" font-size="16" fill="#0e1520" text-decoration="underline">TicketID</text>
+<ellipse cx="2930.0" cy="1100" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="2930.0" y="1105" text-anchor="middle" font-size="16" fill="#0e1520">Status</text>
+<ellipse cx="3254.0" cy="1100" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="3254.0" y="1105" text-anchor="middle" font-size="16" fill="#0e1520">FarePaid</text>
+<ellipse cx="3066.0" cy="1340" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="3066.0" y="1345" text-anchor="middle" font-size="16" fill="#0e1520">SeatNumber</text>
+<ellipse cx="3254.0" cy="1340" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="3254.0" y="1345" text-anchor="middle" font-size="16" fill="#0e1520">IssueDate</text>
+<rect x="3965.0" y="1190.0" width="190" height="60" fill="#e6e9f5" stroke="#1d2b64" stroke-width="3"/>
+<text x="4060" y="1227" text-anchor="middle" font-size="24" font-weight="700" fill="#1d2b64">Baggage</text>
+<ellipse cx="3966.0" cy="1100" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="3966.0" y="1105" text-anchor="middle" font-size="16" fill="#0e1520" text-decoration="underline">BaggageID</text>
+<ellipse cx="3830.0" cy="1100" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="3830.0" y="1105" text-anchor="middle" font-size="16" fill="#0e1520">CheckedDate</text>
+<ellipse cx="4154.0" cy="1100" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="4154.0" y="1105" text-anchor="middle" font-size="16" fill="#0e1520">Weight</text>
+<ellipse cx="3966.0" cy="1340" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="3966.0" y="1345" text-anchor="middle" font-size="16" fill="#0e1520">TagNumber</text>
+<ellipse cx="4154.0" cy="1340" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="4154.0" y="1345" text-anchor="middle" font-size="16" fill="#0e1520">Status</text>
+<rect x="365.0" y="1850.0" width="190" height="60" fill="#e6e9f5" stroke="#1d2b64" stroke-width="3"/>
+<rect x="372.0" y="1857.0" width="176" height="46" fill="none" stroke="#1d2b64" stroke-width="2"/>
+<text x="460" y="1887" text-anchor="middle" font-size="24" font-weight="700" fill="#1d2b64">Seat</text>
+<ellipse cx="366.0" cy="1760" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="366.0" y="1765" text-anchor="middle" font-size="16" fill="#0e1520" text-decoration="underline">SeatNumber</text>
+<ellipse cx="554.0" cy="1760" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="554.0" y="1765" text-anchor="middle" font-size="16" fill="#0e1520">IsAvailable</text>
+<ellipse cx="366.0" cy="2000" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="366.0" y="2005" text-anchor="middle" font-size="16" fill="#0e1520">Class</text>
+<rect x="1265.0" y="1850.0" width="190" height="60" fill="#e6e9f5" stroke="#1d2b64" stroke-width="3"/>
+<text x="1360" y="1887" text-anchor="middle" font-size="24" font-weight="700" fill="#1d2b64">Route</text>
+<ellipse cx="1266.0" cy="1760" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="1266.0" y="1765" text-anchor="middle" font-size="16" fill="#0e1520" text-decoration="underline">RouteID</text>
+<ellipse cx="1454.0" cy="1760" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="1454.0" y="1765" text-anchor="middle" font-size="16" fill="#0e1520">BaseFare</text>
+<ellipse cx="1266.0" cy="2000" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="1266.0" y="2005" text-anchor="middle" font-size="16" fill="#0e1520">Distance</text>
+<rect x="2165.0" y="1850.0" width="190" height="60" fill="#e6e9f5" stroke="#1d2b64" stroke-width="3"/>
+<text x="2260" y="1887" text-anchor="middle" font-size="24" font-weight="700" fill="#1d2b64">Payment</text>
+<ellipse cx="2166.0" cy="1760" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="2166.0" y="1765" text-anchor="middle" font-size="16" fill="#0e1520" text-decoration="underline">PaymentID</text>
+<ellipse cx="2030.0" cy="1760" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="2030.0" y="1765" text-anchor="middle" font-size="16" fill="#0e1520">TransactionID</text>
+<ellipse cx="2354.0" cy="1760" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="2354.0" y="1765" text-anchor="middle" font-size="16" fill="#0e1520">PaymentMethod</text>
+<ellipse cx="2166.0" cy="2000" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="2166.0" y="2005" text-anchor="middle" font-size="16" fill="#0e1520">Amount</text>
+<ellipse cx="2354.0" cy="2000" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="2354.0" y="2005" text-anchor="middle" font-size="16" fill="#0e1520">PaymentDate</text>
+<rect x="3065.0" y="1850.0" width="190" height="60" fill="#e6e9f5" stroke="#1d2b64" stroke-width="3"/>
+<text x="3160" y="1887" text-anchor="middle" font-size="24" font-weight="700" fill="#1d2b64">Refund</text>
+<ellipse cx="3066.0" cy="1760" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="3066.0" y="1765" text-anchor="middle" font-size="16" fill="#0e1520" text-decoration="underline">RefundID</text>
+<ellipse cx="2930.0" cy="1760" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="2930.0" y="1765" text-anchor="middle" font-size="16" fill="#0e1520">Status</text>
+<ellipse cx="3254.0" cy="1760" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="3254.0" y="1765" text-anchor="middle" font-size="16" fill="#0e1520">Reason</text>
+<ellipse cx="3066.0" cy="2000" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="3066.0" y="2005" text-anchor="middle" font-size="16" fill="#0e1520">Amount</text>
+<ellipse cx="3254.0" cy="2000" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="3254.0" y="2005" text-anchor="middle" font-size="16" fill="#0e1520">RefundDate</text>
+<rect x="365.0" y="2510.0" width="190" height="60" fill="#e6e9f5" stroke="#1d2b64" stroke-width="3"/>
+<text x="460" y="2547" text-anchor="middle" font-size="24" font-weight="700" fill="#1d2b64">FareClass</text>
+<ellipse cx="366.0" cy="2420" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="366.0" y="2425" text-anchor="middle" font-size="16" fill="#0e1520" text-decoration="underline">FareClassID</text>
+<ellipse cx="554.0" cy="2420" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="554.0" y="2425" text-anchor="middle" font-size="16" fill="#0e1520">Multiplier</text>
+<ellipse cx="366.0" cy="2660" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="366.0" y="2665" text-anchor="middle" font-size="16" fill="#0e1520">Code</text>
+<rect x="1265.0" y="2510.0" width="190" height="60" fill="#e6e9f5" stroke="#1d2b64" stroke-width="3"/>
+<text x="1360" y="2547" text-anchor="middle" font-size="24" font-weight="700" fill="#1d2b64">Airport</text>
+<ellipse cx="1266.0" cy="2420" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="1266.0" y="2425" text-anchor="middle" font-size="16" fill="#0e1520" text-decoration="underline">AirportID</text>
+<ellipse cx="1130.0" cy="2420" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="1130.0" y="2425" text-anchor="middle" font-size="16" fill="#0e1520">Country</text>
+<ellipse cx="1454.0" cy="2420" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="1454.0" y="2425" text-anchor="middle" font-size="16" fill="#0e1520">Name</text>
+<ellipse cx="1266.0" cy="2660" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="1266.0" y="2665" text-anchor="middle" font-size="16" fill="#0e1520">Code</text>
+<ellipse cx="1454.0" cy="2660" rx="64.0" ry="21.0" fill="#ffffff" stroke="#5d687a" stroke-width="2"/>
+<text x="1454.0" y="2665" text-anchor="middle" font-size="16" fill="#0e1520">City</text>
+</svg>

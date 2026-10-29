@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Add Flight | Aerion{% endblock %}
+{% block content %}
+<section class="section-panel"><h1>Add Flight</h1>
+<form method="POST" class="auth-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="form-group"><label for="route_id">Route</label><select id="route_id" name="route_id" required>{% for route in routes %}<option value="{{ route.RouteID }}">{{ route.RouteID }} — {{ route.DepartureAirport.Code if route.DepartureAirport else route.DepartureAirportID }} to {{ route.ArrivalAirport.Code if route.ArrivalAirport else route.ArrivalAirportID }}</option>{% endfor %}</select></div>
+  <div class="form-row"><div class="form-group"><label for="aircraft_id">Aircraft</label><select id="aircraft_id" name="aircraft_id" required>{% for aircraft in aircrafts %}<option value="{{ aircraft.AircraftID }}">{{ aircraft.RegistrationNumber }} — {{ aircraft.Model }} ({{ aircraft.TotalSeats }} seats)</option>{% endfor %}</select></div>
+  <div class="form-group"><label for="flight_number">Flight number</label><input id="flight_number" name="flight_number" required maxlength="10"></div></div>
+  <div class="form-row"><div class="form-group"><label for="departure_time">Departure</label><input id="departure_time" name="departure_time" type="datetime-local" required></div>
+  <div class="form-group"><label for="arrival_time">Arrival</label><input id="arrival_time" name="arrival_time" type="datetime-local" required></div></div>
+  <div class="form-row"><div class="form-group"><label for="status">Status</label><select id="status" name="status"><option value="on_time">On time</option><option value="delayed">Delayed</option><option value="cancelled">Cancelled</option></select></div>
+  <div class="form-group"><label for="fare_class">Fare class</label><select id="fare_class" name="fare_class">{% for fare in fare_classes %}<option value="{{ fare.Code }}">{{ fare.Name }} (×{{ '%.2f'|format(fare.Multiplier) }})</option>{% else %}<option value="economy">Economy</option><option value="premium_economy">Premium Economy</option><option value="business">Business</option><option value="first">First Class</option>{% endfor %}</select></div></div>
+  <button type="submit" class="btn-submit">Add flight</button>
+</form></section>
+{% endblock %}

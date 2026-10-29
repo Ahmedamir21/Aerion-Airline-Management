@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Aerion{% endblock %}
+
+{% block content %}
+<div class="passenger-dashboard">
+    <div class="user-info">
+        <div class="user-greeting">
+            <i class="fas fa-user"></i>
+            <span>Welcome, {{ passenger.Name }}</span>
+        </div>
+        <div class="user-details">
+            <span>Member since: Not available</span>
+        </div>
+    </div>
+    
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <div class="stat-number">{{ loyalty.MilesBalance if loyalty else 0 }}</div>
+            <div class="stat-label">Loyalty Miles</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ bookings|length }}</div>
+            <div class="stat-label">Total Bookings</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{% if upcoming_bookings %}{{ upcoming_bookings|length }}{% else %}0{% endif %}</div>
+            <div class="stat-label">Upcoming Trips</div>
+        </div>
+    </div>
+    
+    <div class="section-panel">
+        <h2><i class="fas fa-plane-departure"></i> Upcoming Flights</h2>
+        
+        {% if upcoming_bookings %}
+        <div class="flights-list">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Flight</th>
+                        <th>Route</th>
+                        <th>Departure</th>
+                        <th>Status</th>
+                        <th>Seats</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking_detail in upcoming_bookings %}
+                    <tr>
+                        <td>
+                            <strong>{{ booking_detail.flight.FlightNumber }}</strong><br>
+                            {{ booking_detail.flight.DepartureTime.strftime('%m/%d') }}
+                        </td>
+                        <td>
+                            {{ booking_detail.flight.Route.DepartureAirport.Name }} → 
+                            {{ booking_detail.flight.Route.ArrivalAirport.Name }}
+                        </td>
+                        <td>
+                            {{ booking_detail.flight.DepartureTime.strftime('%H:%M') }}
+                        </td>
+                        <td>
+                            <span class="status-{{ booking_detail.flight.Status }}">{{ booking_detail.flight.Status }}</span>
+                        </td>
+                        <td>
+                            {{ booking_detail.booking.NumberOfSeats }} seat{{ booking_detail.booking.NumberOfSeats != 1 and 's' or '' }}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('passenger_my_bookings') }}" class="btn-small">Details</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="no-upcoming">
+            <i class="fas fa-calendar-check"></i>
+            <p>No upcoming flights found.</p>
+            <a href="{{ url_for('passenger_search_flights') }}" class="btn-small">Search for flights</a>
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="section-panel">
+        <h2><i class="fas fa-history"></i> Past Trips</h2>
+        
+        {% if past_bookings %}
+        <div class="flights-list">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Flight</th>
+                        <th>Route</th>
+                        <th>Departure</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking_detail in past_bookings %}
+                    <tr>
+                        <td>
+                            <strong>{{ booking_detail.flight.FlightNumber }}</strong>
+                        </td>
+                        <td>
+                            {{ booking_detail.flight.Route.DepartureAirport.Name }} → 
+                            {{ booking_detail.flight.Route.ArrivalAirport.Name }}
+                        </td>
+                        <td>
+                            {{ booking_detail.flight.DepartureTime.strftime('%m/%d/%Y') }}
+                        </td>
+                        <td>
+                            <span class="status-{{ booking_detail.flight.Status }}">{{ booking_detail.flight.Status }}</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="no-past">
+            <i class="fas fa-folder"></i>
+            <p>No past trips found.</p>
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="section-panel loyalty-panel">
+        <h2><i class="fas fa-star"></i> Loyalty Account</h2>
+        
+        {% if loyalty %}
+        <div class="loyalty-info">
+            <div class="miles-balance">
+                <span>Miles Balance: {{ loyalty.MilesBalance }}</span>
+                <span>Lifetime Earned: {{ loyalty.MilesEarnedTotal }}</span>
+            </div>
+            <div class="miles-history">
+                <small>Last earned: {{ loyalty.LastEarnedDate.strftime('%b %d, %Y') if loyalty.LastEarnedDate else 'N/A' }}</small>
+            </div>
+            
+            {% if loyalty.LastRedeemedDate %}
+            <div class="miles-redeemed">
+                <small>Last redeemed: {{ loyalty.LastRedeemedDate.strftime('%b %d, %Y') }}</small>
+            </div>
+            {% endif %}
+            
+            <a href="{{ url_for('passenger_my_bookings') }}" class="btn-view">View Booking History</a>
+        </div>
+        {% else %}
+        <div class="no-loyalty">
+            <p>No loyalty account found.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="actions-panel">
+    <a href="{{ url_for('passenger_search_flights') }}" class="btn-primary">
+        <i class="fas fa-search"></i> Search & Book Another Flight
+    </a>
+    <a href="{{ url_for('logout') }}" class="btn-secondary">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
+</div>
+{% endblock %}

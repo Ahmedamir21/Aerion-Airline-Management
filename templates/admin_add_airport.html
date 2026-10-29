@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block title %}Add Airport{% endblock %}
+{% block content %}<section class="section-panel"><h1>Add Airport</h1><form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><label for="code">Airport code</label><input id="code" name="code" required maxlength="10"><label for="name">Name</label><input id="name" name="name" required><label for="city">City</label><input id="city" name="city" required><label for="country">Country</label><input id="country" name="country" value="Egypt"><button type="submit" class="btn-primary">Add airport</button></form><a href="{{ url_for('admin_dashboard') }}">Back to dashboard</a></section>{% endblock %}

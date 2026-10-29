@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Operations Centre | Aerion{% endblock %}
+{% block content %}
+<section class="section-panel">
+  <h1>Airline Operations Centre</h1>
+  <p>Operational tools for reports, audit review, data quality, pricing and simulation.</p>
+  <div class="admin-sections">
+    <div class="section-card"><h3>Reports & passenger service</h3><ul>
+      <li><a href="{{ url_for('admin_reports') }}">Reports Center</a></li>
+      <li><a href="{{ url_for('admin_fare_classes') }}">Fare classes and multipliers</a></li>
+      <li><a href="{{ url_for('admin_saved_filters') }}">Saved report filters</a></li>
+    </ul></div>
+    <div class="section-card"><h3>Governance & data quality</h3><ul>
+      <li><a href="{{ url_for('admin_activity_history') }}">Activity History / audit log</a></li>
+      <li><a href="{{ url_for('admin_integrity') }}">Database Integrity Monitor</a></li>
+      <li><a href="{{ url_for('admin_import_csv') }}">Validated CSV flight import</a></li>
+    </ul></div>
+    <div class="section-card"><h3>Flight operations</h3><ul>
+      <li><a href="{{ url_for('admin_employee_shifts') }}">Employee shifts and assigned tasks</a></li>
+      <li><a href="{{ url_for('admin_maintenance_work_orders') }}">Aircraft maintenance work orders</a></li>
+      <li><a href="{{ url_for('admin_aircraft_defects') }}">Aircraft defects</a></li>
+    </ul></div>
+  </div>
+  <h2>Passenger manifests</h2>
+  <p>Choose a flight to review confirmed passenger, seat and booking details. Sensitive passenger data is visible to authorized administrators only.</p>
+  <div class="table-wrap"><table><thead><tr><th>Flight</th><th>Departure</th><th>Arrival</th><th>Status</th><th>Action</th></tr></thead><tbody>
+  {% for flight in flights %}<tr><td>{{ flight.FlightNumber }}</td><td>{{ flight.DepartureTime }}</td><td>{{ flight.ArrivalTime }}</td><td>{{ flight.Status }}</td><td><a href="{{ url_for('admin_passenger_manifest', flight_id=flight.FlightID) }}">Passenger manifest</a></td></tr>{% else %}<tr><td colspan="5">No flights found.</td></tr>{% endfor %}
+  </tbody></table></div>
+  <h2>Route simulation</h2>
+  <p>These routes show illustrative waypoints, not live radar or operational flight telemetry.</p>
+  <ul>{% for route in routes %}<li><a href="{{ url_for('admin_route_tracking', route_id=route.RouteID) }}">Route #{{ route.RouteID }} — {{ route.DepartureAirport.Code if route.DepartureAirport else 'Unknown' }} to {{ route.ArrivalAirport.Code if route.ArrivalAirport else 'Unknown' }}</a></li>{% else %}<li>No routes configured.</li>{% endfor %}</ul>
+</section>
+{% endblock %}

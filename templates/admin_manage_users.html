@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Manage Users | Aerion{% endblock %}
+{% block content %}
+<section class="section-panel">
+  <h1>Manage Users & Employee Roles</h1>
+  <p>Login role controls permissions; job title describes the employee's operational function. All employee accounts use the staff permission group unless they are administrators.</p>
+  <form method="POST" class="auth-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-row"><div class="form-group"><label for="username">Username</label><input id="username" name="username" required maxlength="50" autocomplete="off"></div>
+    <div class="form-group"><label for="password">Temporary password</label><input id="password" name="password" type="password" required minlength="8" maxlength="128" autocomplete="new-password"></div></div>
+    <div class="form-row"><div class="form-group"><label for="name">Full name</label><input id="name" name="name" maxlength="100"></div>
+    <div class="form-group"><label for="role">Permission role</label><select id="role" name="role"><option value="staff">Staff</option><option value="admin">Admin</option></select></div></div>
+    <div class="form-group"><label for="position">Employee job title</label><select id="position" name="position">
+      <option value="operations">Operations</option><option value="maintenance_technician">Maintenance Technician</option><option value="maintenance_supervisor">Maintenance Supervisor</option><option value="cleaner">Aircraft Cleaner</option><option value="check_in_agent">Check-in Agent</option><option value="gate_agent">Gate Agent</option><option value="baggage_handler">Baggage Handler</option><option value="ground_staff">Ground Staff</option><option value="crew_scheduler">Crew Scheduler</option><option value="dispatcher">Dispatcher (simulation)</option><option value="staff">General Staff</option>
+    </select></div>
+    <button type="submit" class="btn-submit">Create employee account</button>
+  </form>
+  <h2>Existing accounts</h2>
+  <div class="table-wrap"><table><thead><tr><th>Username</th><th>Permission role</th><th>Employee name</th><th>Job title</th></tr></thead><tbody>
+  {% for user in users %}{% set employee = employees_by_user.get(user.UserID) %}<tr><td>{{ user.Username }}</td><td>{{ user.Role }}</td><td>{{ employee.Name if employee else '—' }}</td><td>{{ employee.Position|replace('_',' ')|title if employee else '—' }}</td></tr>{% else %}<tr><td colspan="4">No users.</td></tr>{% endfor %}
+  </tbody></table></div>
+</section>
+{% endblock %}

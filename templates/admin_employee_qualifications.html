@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block title %}Employee Qualifications{% endblock %}
+{% block content %}<section class="section-panel"><h1>Employee Qualifications</h1><form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><label for="employee_id">Employee</label><select id="employee_id" name="employee_id" required>{% for employee in employees %}<option value="{{ employee.EmployeeID }}">{{ employee.Name }} (#{{ employee.EmployeeID }})</option>{% endfor %}</select><label for="qualification_name">Qualification</label><input id="qualification_name" name="qualification_name" required><label for="aircraft_type">Authorized aircraft type</label><input id="aircraft_type" name="aircraft_type"><button type="submit" class="btn-primary">Add qualification</button></form><h2>Qualifications</h2><ul>{% for item in qualifications %}<li>{{ item.QualificationName }} - employee #{{ item.EmployeeID }}</li>{% endfor %}</ul></section>{% endblock %}

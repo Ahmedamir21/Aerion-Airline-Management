@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Fare Classes | Aerion{% endblock %}
+{% block content %}
+<section class="section-panel">
+  <h1>Fare Classes</h1><p>Multipliers are applied to the route base fare for new bookings. Existing tickets keep their recorded fare.</p>
+  <form method="POST" class="auth-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-row"><div class="form-group"><label for="code">Code</label><input id="code" name="code" required maxlength="30" placeholder="premium_economy"></div>
+    <div class="form-group"><label for="name">Display name</label><input id="name" name="name" required maxlength="60" placeholder="Premium Economy"></div>
+    <div class="form-group"><label for="multiplier">Fare multiplier</label><input id="multiplier" name="multiplier" type="number" min="0.1" max="10" step="0.05" value="1.45" required></div></div>
+    <button type="submit" class="btn-submit">Add fare class</button>
+  </form>
+  <div class="table-wrap"><table><thead><tr><th>Code</th><th>Name</th><th>Multiplier</th><th>Status</th></tr></thead><tbody>
+  {% for fare in fares %}<tr><td>{{ fare.Code }}</td><td>{{ fare.Name }}</td><td>{{ '%.2f'|format(fare.Multiplier) }}×</td><td>{{ 'Active' if fare.Active else 'Inactive' }}</td></tr>{% endfor %}
+  </tbody></table></div>
+  <p><a href="{{ url_for('admin_operations') }}">Back to Operations Centre</a></p>
+</section>
+{% endblock %}
