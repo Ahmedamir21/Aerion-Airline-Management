@@ -40,6 +40,14 @@
                 <li><a href="{{ url_for('index') }}">Home</a></li>
                 <li><a href="{{ url_for('register') }}">Sign Up</a></li>
                 {% endif %}
+                {% if session.get('admin_id') or session.get('staff_id') %}
+                {% if session.get('passenger_id') %}
+                <li><a href="{{ url_for('passenger_search_flights') }}">Book a flight</a></li>
+                <li><a href="{{ url_for('passenger_dashboard') }}">My trips</a></li>
+                {% else %}
+                <li><a href="{{ url_for('passenger_profile') }}">Fly with us</a></li>
+                {% endif %}
+                {% endif %}
                 {% if session.get('admin_id') or session.get('staff_id') or session.get('passenger_id') %}
                 <li>
                     <form method="POST" action="{{ url_for('logout') }}" class="nav-form">

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Passenger Profile - Aerion{% endblock %}
+{% block content %}
+<div class="auth-container">
+    <aside class="auth-aside">
+        <i class="fas fa-plane"></i>
+        <h2>Fly with Aerion.</h2>
+        <p>Staff and admins can book and travel like passengers, with {{ discount or 10 }}% off every seat.</p>
+    </aside>
+    <div class="auth-box">
+        <div class="auth-header"><h2>Passenger profile</h2></div>
+        <p class="help-text">Booking as <strong>{{ name }}</strong>. This is added to your existing account, so you keep one login.</p>
+        <form method="POST" class="auth-form" autocomplete="off">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="form-group">
+                <label for="passport">Passport number</label>
+                <input type="text" id="passport" name="passport" required maxlength="20" autofocus>
+            </div>
+            <div class="form-group">
+                <label for="contact">Phone or email <small>(optional)</small></label>
+                <input type="text" id="contact" name="contact" maxlength="200">
+            </div>
+            <button type="submit" class="btn-submit">Create profile</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

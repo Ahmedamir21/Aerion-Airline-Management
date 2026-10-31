@@ -13,6 +13,7 @@ Live demo: https://flyaerion.vercel.app
 - Loyalty miles: every booking earns miles (business earns double). Every 40 miles gives 10% off, up to 30%.
 - Booking needs login, and after login you come back to the same seat map.
 - Staff can book at the counter for a passenger. A passenger cannot open staff or admin pages.
+- Staff and admins can also fly. They add their passport once (same login, no second account) and get the normal passenger features plus 10% staff discount, which adds to the miles discount. A passenger account can never become an employee.
 - Admin: airports, routes, aircraft, flights (seats are generated from the aircraft), users, reports.
 
 <p align="center"><img src="docs/seatmap.svg" alt="Seat map" width="460"></p>

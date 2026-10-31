@@ -72,31 +72,46 @@
         <ul id="sel-list" class="sel-list"><li class="muted">No seats selected yet</li></ul>
         <p class="total-line">Total <strong id="sel-total">$0.00</strong></p>
         {% if is_staff %}
+        {% if has_profile %}
         <div class="form-group">
-          <label for="pu">Passenger username</label>
-          <input type="text" id="pu" name="passenger_username" required placeholder="e.g. passenger1">
+          <label for="booking-for">Booking for</label>
+          <select id="booking-for" name="booking_for">
+            <option value="self">Myself (staff discount {{ staff_discount }}%)</option>
+            <option value="other">A passenger at the counter</option>
+          </select>
         </div>
-        <input type="hidden" name="payment_method" value="cash">
-        <p class="muted">Counter booking: paid in cash at the desk.</p>
         {% else %}
-        <div class="form-group">
-          <label for="payment-method">Payment method</label>
-          <select id="payment-method" name="payment_method">
-            <option value="card">Card</option><option value="cash">Cash</option><option value="bank_transfer">Bank transfer</option>
-          </select>
-        </div>
-        <div class="form-group miles-box">
-          <label for="miles_units">Loyalty miles: {{ miles }}</label>
-          {% if max_units > 0 %}
-          <select id="miles_units" name="miles_units">
-            <option value="0">Do not use miles</option>
-            {% for u in range(1, max_units + 1) %}<option value="{{ u }}">Use {{ u * miles_per }} miles &rarr; {{ u * per_unit }}% off</option>{% endfor %}
-          </select>
-          {% else %}
-          <small class="muted">Every {{ miles_per }} miles = {{ per_unit }}% off. Fly to earn more (business earns double).</small>
-          {% endif %}
+        <input type="hidden" name="booking_for" value="other">
+        <p class="muted">Counter booking. To fly yourself with {{ staff_discount }}% off, <a href="{{ url_for('passenger_profile') }}">add your passport details</a>.</p>
+        {% endif %}
+        <div id="counter-box"{% if has_profile %} hidden{% endif %}>
+          <div class="form-group">
+            <label for="pu">Passenger username</label>
+            <input type="text" id="pu" name="passenger_username" {% if not has_profile %}required{% else %}disabled{% endif %} placeholder="e.g. passenger1">
+          </div>
+          <p class="muted">Counter booking: paid in cash at the desk.</p>
         </div>
         {% endif %}
+        <div id="self-box"{% if is_staff and not has_profile %} hidden{% endif %}>
+          {% if staff_discount %}<p class="muted staff-note">Staff discount: {{ staff_discount }}% off every seat.</p>{% endif %}
+          <div class="form-group">
+            <label for="payment-method">Payment method</label>
+            <select id="payment-method" name="payment_method">
+              <option value="card">Card</option><option value="cash">Cash</option><option value="bank_transfer">Bank transfer</option>
+            </select>
+          </div>
+          <div class="form-group miles-box">
+            <label for="miles_units">Loyalty miles: {{ miles }}</label>
+            {% if max_units > 0 %}
+            <select id="miles_units" name="miles_units">
+              <option value="0">Do not use miles</option>
+              {% for u in range(1, max_units + 1) %}<option value="{{ u }}">Use {{ u * miles_per }} miles &rarr; {{ u * per_unit }}% off</option>{% endfor %}
+            </select>
+            {% else %}
+            <small class="muted">Every {{ miles_per }} miles = {{ per_unit }}% off. Fly to earn more (business earns double).</small>
+            {% endif %}
+          </div>
+        </div>
         <button type="submit" class="btn-primary" id="confirm" disabled>Confirm booking</button>
       </form>
     </aside>
@@ -109,7 +124,20 @@
   if (!plane) return;
   var picked = {}, list = document.getElementById('sel-list'), totalEl = document.getElementById('sel-total');
   var form = document.getElementById('seat-form'), btn = document.getElementById('confirm');
-  var units = document.getElementById('miles_units'), perUnit = {{ per_unit }};
+  var units = document.getElementById('miles_units'), perUnit = {{ per_unit }}, staffPct = {{ staff_discount }};
+  var modeSelect = document.getElementById('booking-for');
+  var counterBox = document.getElementById('counter-box'), selfBox = document.getElementById('self-box');
+
+  // Staff can switch between booking for themselves and booking at the counter.
+  function applyMode() {
+    if (modeSelect) {
+      var counter = modeSelect.value === 'other';
+      counterBox.hidden = !counter;
+      selfBox.hidden = counter;
+    }
+    if (counterBox) counterBox.querySelectorAll('input').forEach(function (el) { el.disabled = counterBox.hidden; });
+    selfBox.querySelectorAll('input, select').forEach(function (el) { el.disabled = selfBox.hidden; });
+  }
   function money(v) { return '$' + v.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}); }
   function render() {
     var keys = Object.keys(picked), sum = 0;
@@ -121,8 +149,10 @@
       li.textContent = k + ' \u00b7 ' + picked[k].cls + ' \u00b7 ' + money(picked[k].price);
       list.appendChild(li);
     });
-    var u = units ? parseInt(units.value || '0', 10) : 0;
-    if (u) sum = sum * (1 - u * perUnit / 100);
+    var counterSale = selfBox.hidden;
+    var u = units && !counterSale ? parseInt(units.value || '0', 10) : 0;
+    var percent = counterSale ? 0 : u * perUnit + staffPct;
+    if (percent) sum = sum * (1 - percent / 100);
     totalEl.textContent = money(sum);
     btn.disabled = !keys.length;
   }
@@ -135,6 +165,8 @@
     render();
   });
   if (units) units.addEventListener('change', render);
+  if (modeSelect) modeSelect.addEventListener('change', function () { applyMode(); render(); });
+  applyMode();
   form.addEventListener('submit', function (e) {
     var keys = Object.keys(picked);
     if (!keys.length) { e.preventDefault(); return; }

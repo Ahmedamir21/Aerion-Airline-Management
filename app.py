@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
 import os
 import random
+import re
 import hashlib
 import hmac
 import secrets
@@ -322,6 +323,30 @@ def get_baggage_by_ticket(ticket_id):
     return db.session.query(Baggage).filter_by(TicketID=ticket_id).first()
 
 
+def current_employee_user():
+    """The UserAccount of the logged-in staff member or admin, or None."""
+    if session.get('admin_id'):
+        return db.session.get(UserAccount, session['admin_id'])
+    if session.get('staff_id'):
+        employee = db.session.get(Employee, session['staff_id'])
+        return db.session.get(UserAccount, employee.UserID) if employee else None
+    return None
+
+
+def create_passenger(user_id, name, passport, contact):
+    """Passenger row plus its loyalty account. The caller commits."""
+    passenger = Passenger(UserID=user_id, Name=name, PassportNumber=passport, ContactInfo=contact or None)
+    db.session.add(passenger)
+    db.session.flush()
+    db.session.add(LoyaltyAccount(PassengerID=passenger.PassengerID))
+    return passenger
+
+
+def employee_display_name(user):
+    employee = get_employee_by_user(user.UserID)
+    return employee.Name if employee else user.Username
+
+
 def get_loyalty_by_passenger(passenger_id):
     """Get loyalty account by passenger ID."""
     return db.session.query(LoyaltyAccount).filter_by(PassengerID=passenger_id).first()
@@ -461,6 +486,7 @@ from seatmap import build_plan, seat_list
 MILES_PER_DISCOUNT = 40
 DISCOUNT_PER_UNIT = 10
 MAX_DISCOUNT_UNITS = 3
+STAFF_DISCOUNT_PERCENT = 10  # employees who fly as passengers
 DEFAULT_MULTIPLIERS = {'economy': 1.0, 'premium_economy': 1.45, 'business': 2.8, 'first': 4.5}
 CLOSED_STATUSES = {'cancelled', 'completed', 'arrived', 'departed'}
 
@@ -953,9 +979,7 @@ def register():
             user = UserAccount(Username=username, Password=hash_password(password), Role='passenger')
             db.session.add(user)
             db.session.flush()
-            passenger = Passenger(UserID=user.UserID, Name=name, PassportNumber=passport,
-                                  ContactInfo=contact or None)
-            db.session.add(passenger)
+            passenger = create_passenger(user.UserID, name, passport, contact)
             db.session.commit()
         except Exception:
             db.session.rollback()
@@ -1022,8 +1046,14 @@ def login():
             elif user.Role == 'admin':
                 session['admin_id'] = user.UserID
 
+            # Employees can also fly: if they have a passenger profile, use it too.
+            if user.Role in ('staff', 'admin'):
+                profile = get_passenger_by_user(user.UserID)
+                if profile:
+                    session['passenger_id'] = profile.PassengerID
+
             nxt = safe_next(request.form.get('next'))
-            if nxt and user.Role in ('passenger', 'staff'):
+            if nxt and user.Role in ('passenger', 'staff', 'admin'):
                 return redirect(nxt)
             if user.Role == 'passenger':
                 return redirect(url_for('passenger_dashboard'))
@@ -1176,6 +1206,37 @@ def admin_dashboard():
 # PASSENGER WORKFLOWS
 # ========================================
 
+@app.route('/passenger/profile', methods=['GET', 'POST'])
+def passenger_profile():
+    """Lets a staff member or admin create the passenger profile they need to fly.
+    Passenger accounts already have one, and can never become employees."""
+    user = current_employee_user()
+    if not user:
+        return redirect(url_for('login', next=request.path))
+    existing = get_passenger_by_user(user.UserID)
+    if existing:
+        session['passenger_id'] = existing.PassengerID
+        return redirect(url_for('passenger_dashboard'))
+
+    if request.method == 'POST':
+        passport = (request.form.get('passport') or '').strip().upper()
+        contact = (request.form.get('contact') or '').strip()
+        if not re.fullmatch(r'[A-Z0-9]{5,20}', passport):
+            flash('Enter a valid passport number (letters and digits only)', 'error')
+        elif len(contact) > 200:
+            flash('Contact info is too long', 'error')
+        else:
+            profile = create_passenger(user.UserID, employee_display_name(user), passport, contact)
+            db.session.commit()
+            session['passenger_id'] = profile.PassengerID
+            flash('Passenger profile created. You get {}% off every booking.'.format(STAFF_DISCOUNT_PERCENT), 'success')
+            return redirect(safe_next(request.form.get('next')) or url_for('passenger_search_flights'))
+        return render_template('passenger_profile.html', name=employee_display_name(user)), 400
+
+    return render_template('passenger_profile.html', name=employee_display_name(user),
+                           discount=STAFF_DISCOUNT_PERCENT)
+
+
 @app.route('/passenger/search-flights', methods=['GET', 'POST'])
 def passenger_search_flights():
     """Search flights. Origin and date are optional; at least one airport is needed."""
@@ -1251,14 +1312,17 @@ def passenger_book_flight(flight_id):
     flight = db.get_or_404(Flight, flight_id)
     passenger_id = session.get('passenger_id')
     staff_id = session.get('staff_id')
+    is_employee = bool(staff_id or session.get('admin_id'))
 
-    if session.get('admin_id') and not (passenger_id or staff_id):
-        flash('Administrators manage flights. Log in as a passenger or staff member to book.', 'error')
-        return redirect(url_for('admin_dashboard'))
     if not (passenger_id or staff_id):
+        if is_employee:
+            flash('Add your passport details once to fly as a passenger.', 'info')
+            return redirect(url_for('passenger_profile'))
         flash('Please log in to book this flight. We will bring you back to the seat map.', 'info')
         return redirect(url_for('login', next=request.path))
-    is_staff = bool(staff_id and not passenger_id)
+    # Staff can book for themselves or for a passenger standing at the counter.
+    counter_mode = bool(staff_id) and (not passenger_id or request.values.get('booking_for') == 'other')
+    staff_discount = STAFF_DISCOUNT_PERCENT if is_employee else 0
 
     if flight.Status.lower() in CLOSED_STATUSES or flight.DepartureTime <= datetime.now(timezone.utc).replace(tzinfo=None):
         flash('This flight is no longer available for booking', 'error')
@@ -1284,7 +1348,7 @@ def passenger_book_flight(flight_id):
             flash('You can book up to 9 seats at once', 'error')
             return redirect(request.url)
 
-        if is_staff:
+        if counter_mode:
             username = (request.form.get('passenger_username') or '').strip()
             owner = UserAccount.query.filter_by(Username=username, Role='passenger').first() if username else None
             passenger = get_passenger_by_user(owner.UserID) if owner else None
@@ -1297,13 +1361,13 @@ def passenger_book_flight(flight_id):
                 session.pop('passenger_id', None)
                 return redirect(url_for('login', next=request.path))
 
-        payment_method = (request.form.get('payment_method') or ('cash' if is_staff else 'card')).strip().lower()
+        payment_method = 'cash' if counter_mode else (request.form.get('payment_method') or 'card').strip().lower()
         if payment_method not in {'card', 'cash', 'bank_transfer'}:
             flash('Choose a valid payment method', 'error')
             return redirect(request.url)
 
         units = 0
-        if not is_staff:
+        if not counter_mode:
             try:
                 units = int(request.form.get('miles_units') or 0)
             except ValueError:
@@ -1322,7 +1386,8 @@ def passenger_book_flight(flight_id):
 
         chosen = {x.SeatNumber: x for x in db.session.query(Seat).filter(
             Seat.FlightID == flight_id, Seat.SeatNumber.in_(seat_numbers)).all()}
-        discount = units * DISCOUNT_PER_UNIT / 100.0
+        staff_pct = 0 if counter_mode else staff_discount
+        discount = (units * DISCOUNT_PER_UNIT + staff_pct) / 100.0
         passenger_loyalty = get_loyalty_by_passenger(passenger.PassengerID)
         base_miles = max(int((flight.Route.Distance or 0) / 100), 0)
         booking_ids, total = [], 0.0
@@ -1359,9 +1424,9 @@ def passenger_book_flight(flight_id):
         db.session.commit()
         msg = 'Booked seat{} {} on {}. Total ${:,.2f}{}.'.format(
             's' if len(seat_numbers) > 1 else '', ', '.join(seat_numbers), flight.FlightNumber, total,
-            ' ({}% miles discount applied)'.format(units * DISCOUNT_PER_UNIT) if units else '')
+            ' ({}% discount applied)'.format(int(round(discount * 100))) if discount else '')
         flash(msg, 'success')
-        if is_staff:
+        if counter_mode:
             return redirect(url_for('staff_dashboard'))
         return redirect(url_for('passenger_my_bookings'))
 
@@ -1374,7 +1439,8 @@ def passenger_book_flight(flight_id):
     return render_template(
         'book_flight.html', flight=flight, plan=build_plan(total_seats), prices=prices,
         taken=taken, existing=existing, free_count=free_count, total_seats=len(existing),
-        miles=miles, max_units=max_units, is_staff=is_staff,
+        miles=miles, max_units=max_units, is_staff=bool(staff_id), has_profile=bool(passenger_id),
+        staff_discount=staff_discount,
         miles_per=MILES_PER_DISCOUNT, per_unit=DISCOUNT_PER_UNIT, aircraft=aircraft,
     )
 
